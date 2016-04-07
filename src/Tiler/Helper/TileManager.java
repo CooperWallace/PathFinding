@@ -15,48 +15,40 @@ public class TileManager {
 	int Height = 10;
 	private Square[][] Nodes;
 	private PathFinder AStar;
-	
-	int X=5; int Y=5;
-	
+
+	int X = 5;
+	int Y = 5;
+
 	// Edit this to change block sizes
 	public static final int Blocks_HeightandWidth = 32;
-	
-	//@TODO
+
+	// @TODO
 	// Add a way to set the blocked, and open blocks in the client itself
-	//		-	Like a X mark that can move X and Y and keys are to set different variables.
-	//		-	Add Diagional support
+	// - [ ]Create an editor to test the path finding abilities realtime rather
+	// than hardcoding.
+	// - [X]Add Diagional support
 	// Have Fun!
-	
-	
 
 	public TileManager() {
-		
-		
+
 		Width = (Gdx.graphics.getWidth() / Blocks_HeightandWidth) - 2;
 
-		
 		Height = (Gdx.graphics.getHeight() / Blocks_HeightandWidth) - 2;
-		
-		
-		
+
 		Nodes = new Square[Width][Height];
 
 		buildTiles();
-		
+
 		AStar = new PathFinder(Nodes);
-		AStar.StartPathing( Nodes[10][10],Nodes[Width-1][Height-1]);
-		
-		
+		AStar.StartPathing(Nodes[1][1], Nodes[Width - 1][Height - 1]);
+
 	}
-	
-	
-	
+
 	public void buildTiles() {
 
 		// Build the 2D Array
 		// Edit Constant to make blocks different size
 		int WidthandHeight = Blocks_HeightandWidth;
-		
 
 		for (int i = 0; i < Nodes.length; i++) {
 
@@ -64,8 +56,9 @@ public class TileManager {
 				// Both the X and Y have 64 added in for the offset on the side
 				// of the screen.
 
-				Nodes[i][B] = new Square(((i) * WidthandHeight) + WidthandHeight, ((B) * WidthandHeight) + WidthandHeight, WidthandHeight,
-						WidthandHeight);
+				Nodes[i][B] = new Square(((i) * WidthandHeight)
+						+ WidthandHeight, ((B) * WidthandHeight)
+						+ WidthandHeight, WidthandHeight, WidthandHeight);
 			}
 		}
 
@@ -73,12 +66,6 @@ public class TileManager {
 
 	public void render(ShapeRenderer shape) {
 
-
-		
-		
-		
-		
-		
 		// Renders both the Rectangle and the lines
 		for (int i = 0; i < Nodes.length; i++) {
 
@@ -96,13 +83,12 @@ public class TileManager {
 				shape.end();
 			}
 		}
-
-		
-		
 	}
 
 	public void RenderPosText(SpriteBatch batch) {
 
+		
+		batch.begin();
 		// Renders stuff like position text
 
 		for (int i = 0; i < Nodes.length; i++) {
@@ -110,14 +96,19 @@ public class TileManager {
 			// String is +1 to account for offset of For statement
 
 			for (int B = 0; B < Nodes[i].length; B++) {
-				AssetLoader.Font.draw(batch, Integer.toString(i + 1),
-						Nodes[i][B].getX() + 1, Nodes[i][B].getY() + 20);
-				AssetLoader.Font.draw(batch, Integer.toString(B + 1),
-						Nodes[i][B].getX() + 1, Nodes[i][B].getY() + 40);
+				AssetLoader.Font.draw(batch,Integer.toString(i + 1) + ":"+Integer.toString(B + 1),
+						Nodes[i][B].getX() + 12, Nodes[i][B].getY() + 15);
 
 			}
 		}
 
-		AStar.DebugFont(batch);
+		batch.end();
 	}
+	
+	
+	public Square[][] getGrid(){
+		
+		return Nodes;
+	}
+	
 }

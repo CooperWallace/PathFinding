@@ -1,13 +1,11 @@
 package Tiler.Objects;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Rectangle;
 
 public class Square {
 
-	private int x;
-	private int y;
-	private int height;
-	private int width;
+	private Rectangle SquareRect;
 	private Square Parent;
 	private int CostofMove;
 
@@ -18,10 +16,7 @@ public class Square {
 	public SquareType SqTy;
 
 	public Square(int x, int y, int height, int width) {
-		this.x = x;
-		this.y = y;
-		this.height = height;
-		this.width = width;
+		SquareRect = new Rectangle(x, y, width, height);
 		SqTy = SquareType.Open;
 		
 	}
@@ -102,20 +97,24 @@ public class Square {
 		
 	}
 	
-	public int getX() {
-		return x;
+	public Rectangle getRectangle(){
+		return SquareRect;
+	}
+	
+	public float getX() {
+		return SquareRect.x;
 	}
 
-	public int getY() {
-		return y;
+	public float getY() {
+		return SquareRect.y;
 	}
 
-	public int getWidth() {
-		return width;
+	public float getWidth() {
+		return SquareRect.width;
 	}
 
-	public int getHeight() {
-		return height;
+	public float getHeight() {
+		return SquareRect.height;
 	}
 
 }

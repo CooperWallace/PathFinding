@@ -28,30 +28,38 @@ public class Renderer {
 
 		Batcher = new SpriteBatch();
 		shapeRenderer = new ShapeRenderer();
-		shapeRenderer.setProjectionMatrix(cam.combined);
-		
-		cam.update();
 
-		TL = new TileManager();
-		
+		TL = myWorld.getTileManager();
+
 	}
 
 	public void Render() {
-		
+
+		// Set ProjectionMatrix must be updated every render rather than just in
+		// the initalization.
+		shapeRenderer.setProjectionMatrix(cam.combined);
+		Batcher.setProjectionMatrix(cam.combined);
+
+		cam.update();
+
 		// 1. We draw a black background to prevent flickering.
 		Gdx.gl.glClearColor(255f, 255f, 105 / 255f, 0);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		TL.render(shapeRenderer);
 
-		
+		shapeRenderer.begin(ShapeType.Filled);
+		shapeRenderer.setColor(myWorld.getEditor().returnColorPosIndicator());
+		shapeRenderer.rect(myWorld.getEditor().getPositionalIndicator().getX()+ TL.Blocks_HeightandWidth/4,
+				myWorld.getEditor().getPositionalIndicator().getY() + TL.Blocks_HeightandWidth/4, myWorld
+						.getEditor().getPositionalIndicator().getWidth()/2,
+				myWorld.getEditor().getPositionalIndicator().getHeight()/2);
+		shapeRenderer.end();
+
 	}
-	
-	public void Update(float Delta){
-		
-		cam.translate(5*Delta, 0);
-		
-		
+
+	public void Update(float Delta) {
+
 	}
 
 }

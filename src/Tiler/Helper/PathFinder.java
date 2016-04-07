@@ -38,11 +38,8 @@ public class PathFinder {
 			current.setClosed();
 			counter++;
 
-			int X = (current.getX() / TileManager.Blocks_HeightandWidth) - 1;
-			int Y = (current.getY() / TileManager.Blocks_HeightandWidth) - 1;
-
-			System.out.printf("%3d Setting Closed X: %d and Y: %d %n", counter,
-					X, Y);
+			int X = (int) (current.getX() / TileManager.Blocks_HeightandWidth) - 1;
+			int Y = (int) (current.getY() / TileManager.Blocks_HeightandWidth) - 1;
 
 			if (current == End) {
 				break;
@@ -59,7 +56,6 @@ public class PathFinder {
 					// Square object is set closed, it doesn't change the value
 					// of the original value
 					Nodes[X + 1][Y].setClosed();
-					System.out.printf("Adding RIGHT X: %d Y: %d %n", X + 1, Y);
 
 				}
 
@@ -73,8 +69,6 @@ public class PathFinder {
 
 					Nodes[X][Y + 1].setParent(current);
 
-					System.out.printf("Adding TOP X: %d Y: %d %n", X, Y + 1);
-
 				}
 
 			}
@@ -87,7 +81,6 @@ public class PathFinder {
 					Nodes[X][Y - 1].setParent(current);
 					Nodes[X][Y - 1].setClosed();
 
-					System.out.printf("Adding TOP X: %d Y: %d %n", X, Y - 1);
 				}
 
 			}
@@ -99,8 +92,6 @@ public class PathFinder {
 
 					Nodes[X - 1][Y].setParent(current);
 					Nodes[X - 1][Y].setClosed();
-
-					System.out.printf("Adding TOP X: %d Y: %d %n", X - 1, Y);
 
 				}
 			}
@@ -153,7 +144,7 @@ public class PathFinder {
 			if (((X - 1) >= 0) && ((Y - 1) >= 0)) {
 
 				if (Nodes[X - 1][Y - 1].isOpen()) {
-					queue.add(Nodes[X - 1][Y-1]);
+					queue.add(Nodes[X - 1][Y - 1]);
 
 					Nodes[X - 1][Y - 1].setParent(current);
 					Nodes[X - 1][Y - 1].setClosed();
@@ -162,7 +153,6 @@ public class PathFinder {
 
 			}
 
-			System.out.println(" -- ");
 
 		}
 
