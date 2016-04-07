@@ -95,7 +95,8 @@ public class Square {
 	public boolean isOpen(){
 		if(SqTy == SquareType.Open){
 			return true;
-		}else{
+		}
+		else{
 			return false;
 		}
 		

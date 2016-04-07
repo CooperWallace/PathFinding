@@ -11,19 +11,20 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 
 public class TileManager {
-	int Width = 10;
-	int Height = 10;
+	int Width = 25;
+	int Height = 25;
 	private Square[][] Nodes;
 	private PathFinder AStar;
 	
 	int X=5; int Y=5;
 	
 	// Edit this to change block sizes
-	public static final int Blocks_HeightandWidth = 16;
+	public static final int Blocks_HeightandWidth = 10;
 	
 	//@TODO
 	// Add a way to set the blocked, and open blocks in the client itself
 	//		-	Like a X mark that can move X and Y and keys are to set different variables.
+	//		-	Add Diagional support
 	// Have Fun!
 	
 	
@@ -34,7 +35,7 @@ public class TileManager {
 		buildTiles();
 		
 		AStar = new PathFinder(Nodes);
-		AStar.StartPathing( Nodes[0][0],Nodes[9][9]);
+		AStar.StartPathing( Nodes[0][0],Nodes[20][Height-1]);
 		
 		
 	}
