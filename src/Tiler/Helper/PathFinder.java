@@ -103,10 +103,66 @@ public class PathFinder {
 					System.out.printf("Adding TOP X: %d Y: %d %n", X - 1, Y);
 
 				}
+			}
 
-				System.out.println(" -- ");
+			// Diagonial support.
+
+			// Top Right
+			if ((((X + 1) < Nodes.length) && (Y + 1 < Nodes[Nodes.length - 1].length))) {
+
+				if (Nodes[X + 1][Y + 1].isOpen()) {
+					queue.add(Nodes[X + 1][Y + 1]);
+
+					Nodes[X + 1][Y + 1].setParent(current);
+					Nodes[X + 1][Y + 1].setClosed();
+
+				}
 
 			}
+
+			// Top Left
+
+			if ((((X - 1) >= 0) && (Y + 1 < Nodes[Nodes.length - 1].length))) {
+
+				if (Nodes[X - 1][Y + 1].isOpen()) {
+					queue.add(Nodes[X - 1][Y + 1]);
+
+					Nodes[X - 1][Y + 1].setParent(current);
+					Nodes[X - 1][Y + 1].setClosed();
+
+				}
+
+			}
+
+			// Bottom Right
+
+			if ((X + 1 < Nodes.length) && ((Y - 1) >= 0)) {
+
+				if (Nodes[X + 1][Y - 1].isOpen()) {
+					queue.add(Nodes[X + 1][Y]);
+
+					Nodes[X + 1][Y - 1].setParent(current);
+					Nodes[X + 1][Y - 1].setClosed();
+
+				}
+
+			}
+
+			// Bottom Left
+
+			if (((X - 1) >= 0) && ((Y - 1) >= 0)) {
+
+				if (Nodes[X - 1][Y - 1].isOpen()) {
+					queue.add(Nodes[X - 1][Y-1]);
+
+					Nodes[X - 1][Y - 1].setParent(current);
+					Nodes[X - 1][Y - 1].setClosed();
+
+				}
+
+			}
+
+			System.out.println(" -- ");
 
 		}
 

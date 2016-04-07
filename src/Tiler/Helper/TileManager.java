@@ -11,15 +11,15 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 
 public class TileManager {
-	int Width = 25;
-	int Height = 25;
+	int Width = 10;
+	int Height = 10;
 	private Square[][] Nodes;
 	private PathFinder AStar;
 	
 	int X=5; int Y=5;
 	
 	// Edit this to change block sizes
-	public static final int Blocks_HeightandWidth = 10;
+	public static final int Blocks_HeightandWidth = 32;
 	
 	//@TODO
 	// Add a way to set the blocked, and open blocks in the client itself
@@ -30,12 +30,21 @@ public class TileManager {
 	
 
 	public TileManager() {
+		
+		
+		Width = (Gdx.graphics.getWidth() / Blocks_HeightandWidth) - 2;
+
+		
+		Height = (Gdx.graphics.getHeight() / Blocks_HeightandWidth) - 2;
+		
+		
+		
 		Nodes = new Square[Width][Height];
 
 		buildTiles();
 		
 		AStar = new PathFinder(Nodes);
-		AStar.StartPathing( Nodes[0][0],Nodes[20][Height-1]);
+		AStar.StartPathing( Nodes[10][10],Nodes[Width-1][Height-1]);
 		
 		
 	}
@@ -45,7 +54,7 @@ public class TileManager {
 	public void buildTiles() {
 
 		// Build the 2D Array
-		// Edit Constant to make different blocks
+		// Edit Constant to make blocks different size
 		int WidthandHeight = Blocks_HeightandWidth;
 		
 
@@ -81,7 +90,7 @@ public class TileManager {
 				shape.end();
 
 				shape.begin(ShapeType.Line);
-				shape.setColor(Color.RED);
+				shape.setColor(Color.BLACK);
 				shape.rect(Nodes[i][B].getX(), Nodes[i][B].getY(),
 						Nodes[i][B].getWidth(), Nodes[i][B].getHeight());
 				shape.end();
