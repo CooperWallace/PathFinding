@@ -3,14 +3,11 @@ package Tiler.MainObjects;
 import Tiler.Helper.TileManager;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 
 public class Renderer {
 
@@ -48,12 +45,16 @@ public class Renderer {
 
 		TL.render(shapeRenderer);
 
+		// Render the Live Positional Indicator. The division is needed to put
+		// the square in the middle of the block.a
 		shapeRenderer.begin(ShapeType.Filled);
 		shapeRenderer.setColor(myWorld.getEditor().returnColorPosIndicator());
-		shapeRenderer.rect(myWorld.getEditor().getPositionalIndicator().getX()+ TL.Blocks_HeightandWidth/4,
-				myWorld.getEditor().getPositionalIndicator().getY() + TL.Blocks_HeightandWidth/4, myWorld
-						.getEditor().getPositionalIndicator().getWidth()/2,
-				myWorld.getEditor().getPositionalIndicator().getHeight()/2);
+		shapeRenderer.rect(myWorld.getEditor().getPositionalIndicator().getX()
+				+ TL.getBlock_HeightandWidth() / 4, myWorld.getEditor()
+				.getPositionalIndicator().getY()
+				+ TL.getBlock_HeightandWidth() / 4, myWorld.getEditor()
+				.getPositionalIndicator().getWidth() / 2, myWorld.getEditor()
+				.getPositionalIndicator().getHeight() / 2);
 		shapeRenderer.end();
 
 	}

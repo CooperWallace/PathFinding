@@ -1,5 +1,8 @@
 package Tiler.MainObjects;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
+
 import Tiler.Helper.TileEditor;
 import Tiler.Helper.TileManager;
 
@@ -16,6 +19,11 @@ public class World {
 
 	public void Update(float Delta) {
 
+		if(Gdx.input.isKeyPressed(Keys.R)){
+			TileManager.UpdatePathing();
+		}
+		
+		Editor.UpdateInputMovements();
 	}
 
 	public TileManager getTileManager() {

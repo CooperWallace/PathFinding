@@ -35,7 +35,10 @@ public class Square {
 	
 	public Square getParent(){
 		return Parent;
-		
+	}
+	
+	public void KillParentLink(){
+		Parent = null;
 	}
 	
 	public boolean hasParent(){
@@ -95,6 +98,14 @@ public class Square {
 			return false;
 		}
 		
+	}
+	
+	public boolean isBlocked(){
+		if(SqTy == SquareType.Blocked){
+			return true;
+		}
+		
+		return false;
 	}
 	
 	public Rectangle getRectangle(){

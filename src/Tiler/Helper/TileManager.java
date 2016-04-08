@@ -23,10 +23,9 @@ public class TileManager {
 	public static final int Blocks_HeightandWidth = 32;
 
 	// @TODO
-	// Add a way to set the blocked, and open blocks in the client itself
-	// - [ ]Create an editor to test the path finding abilities realtime rather
-	// than hardcoding.
-	// - [X]Add Diagional support
+	// 
+	//	[ ] - Implement a way that this code can be reused on different objects 
+	//
 	// Have Fun!
 
 	public TileManager() {
@@ -40,7 +39,7 @@ public class TileManager {
 		buildTiles();
 
 		AStar = new PathFinder(Nodes);
-		AStar.StartPathing(Nodes[1][1], Nodes[Width - 1][Height - 1]);
+		AStar.StartPathing(Nodes[0][0], Nodes[Width-1][Height-1]);
 
 	}
 
@@ -61,6 +60,12 @@ public class TileManager {
 						+ WidthandHeight, WidthandHeight, WidthandHeight);
 			}
 		}
+		
+		
+	for(int i =2; i< Nodes[Nodes.length-1].length;i++){
+		
+		Nodes[4][i].setBlocked();
+	}
 
 	}
 
@@ -105,6 +110,14 @@ public class TileManager {
 		batch.end();
 	}
 	
+	public void UpdatePathing(){
+		
+		AStar.UpdatePathfinder();
+	}
+	
+	public int getBlock_HeightandWidth(){
+		return Blocks_HeightandWidth;
+	}
 	
 	public Square[][] getGrid(){
 		

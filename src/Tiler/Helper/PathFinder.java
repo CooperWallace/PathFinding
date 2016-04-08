@@ -1,8 +1,6 @@
 package Tiler.Helper;
 
-import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.Map.Entry;
 import java.util.Queue;
 
 import Tiler.Objects.Square;
@@ -12,24 +10,29 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class PathFinder {
 
 	private Square[][] Nodes;
-	private HashMap<Square, Square> CurrentTo;
-
+	private Square[][] SearchingNodes;
+	private Square Start;
+	private Square End;
+	
 	public PathFinder(Square[][] Nodes) {
 		this.Nodes = Nodes;
-
+		
 	}
 
 	public void StartPathing(Square Start, Square End) {
-		StartFrontier(Start, End);
+		this.Start = Start;
+		this.End = End;
+		StartFrontier();
 
 		Retrace(End);
 
 	}
 
-	public void StartFrontier(Square Start, Square End) {
+	public void StartFrontier() {
 		System.out.println("Start Frontier");
 		int counter = 0;
 		Queue<Square> queue = new LinkedList<Square>();
+		queue.clear();
 		queue.add(Start);
 
 		while (!queue.isEmpty()) {
@@ -47,7 +50,7 @@ public class PathFinder {
 
 			// Get Nodes to the Right
 			if (X + 1 < Nodes.length) {
-				if (Nodes[X + 1][Y].isOpen()) {
+				if (Nodes[X + 1][Y].isOpen() && !Nodes[X+1][Y].isBlocked()) {
 					queue.add(Nodes[X + 1][Y]);
 
 					Nodes[X + 1][Y].setParent(current);
@@ -97,7 +100,7 @@ public class PathFinder {
 			}
 
 			// Diagonial support.
-
+/*
 			// Top Right
 			if ((((X + 1) < Nodes.length) && (Y + 1 < Nodes[Nodes.length - 1].length))) {
 
@@ -151,7 +154,7 @@ public class PathFinder {
 
 				}
 
-			}
+			}*/
 
 
 		}
@@ -163,7 +166,6 @@ public class PathFinder {
 	public void Retrace(Square ENDPOINT) {
 		Square Current = ENDPOINT;
 		ENDPOINT.setTracing();
-		Square Temp = Current.getParent();
 
 		System.out.println("Retrace Started");
 		while (Current.hasParent()) {
@@ -177,6 +179,26 @@ public class PathFinder {
 
 	}
 
+	public void UpdatePathfinder(){
+		
+		for(int i =0; i < Nodes.length; i++){
+			
+			for(int n=0; n < Nodes[Nodes.length-1].length; n++){
+				if(!(Nodes[i][n].isBlocked() && !Nodes[i][n].isOpen())){
+					Nodes[i][n].setOpen();
+					Nodes[i][n].KillParentLink();
+				}
+				
+				
+			}
+		}
+		
+		
+		StartFrontier();
+		Retrace(End);
+		
+	}
+	
 	public boolean ifExists(Square Test, int I) {
 		if ((Test.getX() / 64 - 1) <= Nodes[Nodes.length - 1].length) {
 			if ((Test.getY() / 64 - 1) - 1 <= Nodes.length) {
