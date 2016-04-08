@@ -76,6 +76,10 @@ public class TileEditor {
 			Nodes[(int) IndicatorRawPosition.x][(int) IndicatorRawPosition.y].setBlocked();
 		}
 		
+		if(Gdx.input.isKeyPressed(Keys.E)){
+			Nodes[(int) IndicatorRawPosition.x][(int) IndicatorRawPosition.y].setOpen();
+		}
+		
 		
 		
 

@@ -14,7 +14,7 @@ public class TileManager {
 	int Width = 10;
 	int Height = 10;
 	private Square[][] Nodes;
-	private PathFinder AStar;
+	private PathFinder PathFinding;
 
 	int X = 5;
 	int Y = 5;
@@ -38,8 +38,8 @@ public class TileManager {
 
 		buildTiles();
 
-		AStar = new PathFinder(Nodes);
-		AStar.StartPathing(Nodes[0][0], Nodes[Width-1][Height-1]);
+		PathFinding = new PathFinder(Nodes);
+		PathFinding.StartPathing(Nodes[0][0], Nodes[Width-1][Height-1]);
 
 	}
 
@@ -112,7 +112,7 @@ public class TileManager {
 	
 	public void UpdatePathing(){
 		
-		AStar.UpdatePathfinder();
+		PathFinding.UpdatePathfinder();
 	}
 	
 	public int getBlock_HeightandWidth(){

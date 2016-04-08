@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class PathFinder {
 
 	private Square[][] Nodes;
-	private Square[][] SearchingNodes;
 	private Square Start;
 	private Square End;
 	
@@ -100,7 +99,7 @@ public class PathFinder {
 			}
 
 			// Diagonial support.
-/*
+
 			// Top Right
 			if ((((X + 1) < Nodes.length) && (Y + 1 < Nodes[Nodes.length - 1].length))) {
 
@@ -133,7 +132,7 @@ public class PathFinder {
 			if ((X + 1 < Nodes.length) && ((Y - 1) >= 0)) {
 
 				if (Nodes[X + 1][Y - 1].isOpen()) {
-					queue.add(Nodes[X + 1][Y]);
+					queue.add(Nodes[X + 1][Y-1]);
 
 					Nodes[X + 1][Y - 1].setParent(current);
 					Nodes[X + 1][Y - 1].setClosed();
@@ -154,7 +153,7 @@ public class PathFinder {
 
 				}
 
-			}*/
+			}
 
 
 		}
@@ -165,7 +164,6 @@ public class PathFinder {
 
 	public void Retrace(Square ENDPOINT) {
 		Square Current = ENDPOINT;
-		ENDPOINT.setTracing();
 
 		System.out.println("Retrace Started");
 		while (Current.hasParent()) {
