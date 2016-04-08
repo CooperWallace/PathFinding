@@ -1,7 +1,5 @@
 package Tiler.Helper;
 
-import javax.annotation.PostConstruct;
-
 import Tiler.Objects.Square;
 
 import com.badlogic.gdx.Gdx;
@@ -11,11 +9,9 @@ import com.badlogic.gdx.math.Rectangle;
 
 public class TileEditor {
 
-	/*
-	 * This class is going to dedicated to doing the following - [ ] Changing
-	 * Grid Square types real time rather than hardcoding - [ ] Live Position
-	 * Indicatior, which can change the type of square with a button press. - [
-	 * ] Rerunning the Pathing Algorithmto update after the edits
+	/*TODO
+	 * This class is going to dedicated to making a live positional editor'
+	 * It'll be used to change the map real time and test the path finding abilities.
 	 */
 
 	private Square[][] Nodes;
@@ -41,8 +37,18 @@ public class TileEditor {
 
 	public void UpdateInputMovements() {
 
-		// Update the movements of the Indicator
-
+		// This class changes the position of the positon.
+		// It checks to make sure that the move is within range.
+		
+		
+		// Base for mouse controls.
+		//int MouseX = ((Gdx.input.getX() - Gdx.input.getX()%TileManager.Blocks_HeightandWidth) / TileManager.Blocks_HeightandWidth); 
+		
+		
+		
+		
+		
+		// Update the movements of the Indicator with the use of keys.
 		if (Gdx.input.isKeyPressed(Keys.UP)) {
 			if (IndicatorRawPosition.y < Nodes[Nodes.length - 1].length - 1) {
 				IndicatorRawPosition.y++;
@@ -71,6 +77,9 @@ public class TileEditor {
 		
 		// Update the Indicator to the changed position.
 		PositionalIndicator = Nodes[(int) IndicatorRawPosition.x][(int) IndicatorRawPosition.y];
+		
+		
+		// Changing the type of block with a press of a button. Useful for realtime editing.
 		
 		if(Gdx.input.isKeyPressed(Keys.SPACE)){
 			Nodes[(int) IndicatorRawPosition.x][(int) IndicatorRawPosition.y].setBlocked();

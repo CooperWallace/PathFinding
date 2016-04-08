@@ -34,6 +34,7 @@ public class TileManager {
 
 		Height = (Gdx.graphics.getHeight() / Blocks_HeightandWidth) - 2;
 
+		// Builds the tiles to match the screen width with 1x1 block border
 		Nodes = new Square[Width][Height];
 
 		buildTiles();
@@ -49,6 +50,9 @@ public class TileManager {
 		// Edit Constant to make blocks different size
 		int WidthandHeight = Blocks_HeightandWidth;
 
+		// This method is dedicated to Initializing all of the squares in the grid.
+		
+		
 		for (int i = 0; i < Nodes.length; i++) {
 
 			for (int B = 0; B < Nodes[i].length; B++) {
@@ -61,11 +65,6 @@ public class TileManager {
 			}
 		}
 		
-		
-	for(int i =2; i< Nodes[Nodes.length-1].length;i++){
-		
-		Nodes[4][i].setBlocked();
-	}
 
 	}
 
