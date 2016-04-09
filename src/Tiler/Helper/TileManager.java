@@ -3,12 +3,10 @@ package Tiler.Helper;
 import Tiler.Objects.Square;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.math.Vector2;
 
 public class TileManager {
 	int Width = 10;
@@ -20,12 +18,9 @@ public class TileManager {
 	int Y = 5;
 
 	// Edit this to change block sizes
-	public static final int Blocks_HeightandWidth = 32;
+	public static final int Blocks_HeightandWidth = 16;
 
 	// @TODO
-	// 
-	//	[ ] - Implement a way that this code can be reused on different objects 
-	//
 	// Have Fun!
 
 	public TileManager() {
@@ -40,7 +35,7 @@ public class TileManager {
 		buildTiles();
 
 		PathFinding = new PathFinder(Nodes);
-		PathFinding.StartPathing(Nodes[0][0], Nodes[Width-1][Height-1]);
+		PathFinding.StartPathing(Nodes[0][Height/2-1], Nodes[Width-1][Height/2-1]);
 
 	}
 
@@ -110,7 +105,6 @@ public class TileManager {
 	}
 	
 	public void UpdatePathing(){
-		
 		PathFinding.UpdatePathfinder();
 	}
 	

@@ -27,12 +27,18 @@ public class PathFinder {
 
 	}
 
+	/**
+	 * This Method is dedicated to scanning the grid until it finds a /
+	 * *suitable path between the starting point and the end point.
+	 */
 	public void StartFrontier() {
 
-		// This Method is dedicated to scanning the grid until it finds a
-		// suitable path between the starting point and the end point.
-
 		System.out.println("Start Frontier");
+
+		// A debugging feature to see how many times the queue is run, and
+		// essentially how many blocks were searched.
+		// If it's over the H*W number then it is inefficient and searching
+		// blocks more than once.
 		int counter = 0;
 
 		Queue<Square> queue = new LinkedList<Square>();
@@ -176,6 +182,13 @@ public class PathFinder {
 
 	}
 
+	/**
+	 * This method is dedicated to retracing the route found and displaying the
+	 * route taken in a graphical form.
+	 * 
+	 * @param ENDPOINT
+	 *            In order to retrace the route found in StartFrontier
+	 */
 	public void Retrace(Square ENDPOINT) {
 		// This retraces from the EndPoint because it has the parent path to the
 		// starting point. It makes the block path red showing which way to get
@@ -203,6 +216,11 @@ public class PathFinder {
 
 	}
 
+	/**
+	 * This method is dedicated to rerunning the Algorithm and setting the
+	 * searched nodes to unsearched to allow it to be rerun without problems.
+	 * 
+	 */
 	public void UpdatePathfinder() {
 
 		// This is needed to set all of the unblocked blocks to open so that
@@ -214,7 +232,9 @@ public class PathFinder {
 
 			for (int n = 0; n < Nodes[Nodes.length - 1].length; n++) {
 				if (!(Nodes[i][n].isBlocked() && !Nodes[i][n].isOpen())) {
+					// Sets the Node open so that it can be searched again
 					Nodes[i][n].setOpen();
+					// Kills the Parent link so that the Frontier can reset it to a new value.
 					Nodes[i][n].KillParentLink();
 				}
 

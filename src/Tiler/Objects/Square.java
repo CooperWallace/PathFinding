@@ -13,7 +13,7 @@ public class Square {
 		Closed, Open,Start, Blocked, Tracing;
 	}
 
-	public SquareType SqTy;
+	private SquareType SqTy;
 
 	public Square(int x, int y, int height, int width) {
 		SquareRect = new Rectangle(x, y, width, height);
@@ -80,9 +80,8 @@ public class Square {
 		}else if(SqTy == SquareType.Start){
 			return Color.GREEN;
 		}else if(SqTy == SquareType.Blocked){
-			return Color.YELLOW;
-			
-		}else if(SqTy == SqTy.Tracing){
+			return Color.YELLOW;		
+		}else if(SqTy == SquareType.Tracing){
 			return Color.RED;
 		}
 		else {

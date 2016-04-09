@@ -3,27 +3,30 @@ package Tiler.Screen;
 import Tiler.MainObjects.Renderer;
 import Tiler.MainObjects.World;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.FPSLogger;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 
 public class GameScreen implements Screen{
 
 	private World MyWorld;
 	private Renderer WorldRenderer;
-	private FPSLogger FP;
+	private OrthographicCamera OrthoCam;
 	
 	public GameScreen(){
 		MyWorld = new World();
 		WorldRenderer = new Renderer(MyWorld);
-		FP = new FPSLogger();
+
+		OrthoCam= new OrthographicCamera();
+		OrthoCam.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		
 	}
 	
 	@Override
 	public void render(float delta) {
-		FP.log();
-		MyWorld.Update(delta);
-		WorldRenderer.Render();
+		MyWorld.Update(delta, OrthoCam);
+		WorldRenderer.Render(OrthoCam);
 		WorldRenderer.Update(delta);
 		
 	}

@@ -13,15 +13,12 @@ public class Renderer {
 
 	private World myWorld;
 	private SpriteBatch Batcher; // Rendering Objects
-	private OrthographicCamera cam;
 	private ShapeRenderer shapeRenderer;
 	private TileManager TL;
 
 	public Renderer(World InWorld) {
 		myWorld = InWorld;
 
-		cam = new OrthographicCamera();
-		cam.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
 		Batcher = new SpriteBatch();
 		shapeRenderer = new ShapeRenderer();
@@ -30,7 +27,7 @@ public class Renderer {
 
 	}
 
-	public void Render() {
+	public void Render(OrthographicCamera cam) {
 
 		// Set ProjectionMatrix must be updated every render rather than just in
 		// the initalization.
@@ -38,6 +35,7 @@ public class Renderer {
 		Batcher.setProjectionMatrix(cam.combined);
 
 		cam.update();
+		
 
 		// 1. We draw a black background to prevent flickering.
 		Gdx.gl.glClearColor(255f, 255f, 105 / 255f, 0);
