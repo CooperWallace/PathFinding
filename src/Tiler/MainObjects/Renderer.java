@@ -54,6 +54,8 @@ public class Renderer {
 				.getPositionalIndicator().getWidth() / 2, myWorld.getEditor()
 				.getPositionalIndicator().getHeight() / 2);
 		shapeRenderer.end();
+		
+		TL.RenderPosText(Batcher);
 
 	}
 

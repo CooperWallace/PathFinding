@@ -10,107 +10,121 @@ public class Square {
 	private int CostofMove;
 
 	private enum SquareType {
-		Closed, Open,Start, Blocked, Tracing;
+		Closed, Open, Start, Blocked, Tracing;
 	}
 
 	private SquareType SqTy;
 
+	/**
+	 * 
+	 * @param x, y, height, width - All of these are used to set the
+	 *            Rectangle so that the Square may be rendered.
+	 * 
+	 * @param CostofMove
+	 * 			The calculated Heuristic cost from the block to the end point.
+	 */
+
 	public Square(int x, int y, int height, int width) {
 		SquareRect = new Rectangle(x, y, width, height);
 		SqTy = SquareType.Open;
-		
+
 	}
 
-	
 	// Parent Methods for pathfinding.
-	public void setParent(Square Parent){
+	public void setParent(Square Parent) {
 		this.Parent = Parent;
 	}
-	
-	public int getCost(){
-		return CostofMove;
+
+	public void setCost(int heuristicsCost){
 		
+		this.CostofMove = heuristicsCost;
 		
 	}
 	
-	public Square getParent(){
+	public int getCost() {
+		return CostofMove;
+
+	}
+
+	public Square getParent() {
 		return Parent;
 	}
-	
-	public void KillParentLink(){
+
+	public void KillParentLink() {
 		Parent = null;
 	}
-	
-	public boolean hasParent(){
-		
-		if(Parent == null){
+
+	public boolean hasParent() {
+
+		if (Parent == null) {
 			return false;
 		}
-		
+
 		return true;
-		
+
 	}
-	
-	
+
 	// Set Square Types
-	public void setClosed(){
-		SqTy = SquareType.Closed;		
+	public void setClosed() {
+		SqTy = SquareType.Closed;
 	}
-	
-	public void setOpen(){
-		SqTy = SquareType.Open;	
+
+	public void setOpen() {
+		SqTy = SquareType.Open;
 	}
-	
-	public void setBlocked(){
+
+	public void setBlocked() {
 		SqTy = SquareType.Blocked;
 	}
 	
-	
-	public void setTracing(){
-		SqTy = SquareType.Tracing;
+	public void setStart() {
+		SqTy = SquareType.Start;
 	}
 	
-	
+
+	public void setTracing() {
+		SqTy = SquareType.Tracing;
+	}
+
 	/* Getter Classes */
 	public Color getColor() {
 		if (SqTy == SquareType.Closed) {
 			return Color.BLUE;
-		} else if(SqTy == SquareType.Open){
+		} else if (SqTy == SquareType.Open) {
 			return Color.LIGHT_GRAY;
-		}else if(SqTy == SquareType.Start){
+		} else if (SqTy == SquareType.Start) {
 			return Color.GREEN;
-		}else if(SqTy == SquareType.Blocked){
-			return Color.YELLOW;		
-		}else if(SqTy == SquareType.Tracing){
+		} else if (SqTy == SquareType.Blocked) {
+			return Color.YELLOW;
+		} else if (SqTy == SquareType.Tracing) {
 			return Color.RED;
-		}
-		else {
+		} else {
 			return Color.BLACK;
 		}
 
 	}
-	public boolean isOpen(){
-		if(SqTy == SquareType.Open){
+
+	public boolean isOpen() {
+		if (SqTy == SquareType.Open) {
 			return true;
-		}
-		else{
+		} else {
 			return false;
 		}
-		
+
 	}
-	
-	public boolean isBlocked(){
-		if(SqTy == SquareType.Blocked){
+
+	public boolean isBlocked() {
+		if (SqTy == SquareType.Blocked) {
 			return true;
 		}
-		
+
 		return false;
 	}
-	
-	public Rectangle getRectangle(){
+
+	public Rectangle getRectangle() {
 		return SquareRect;
 	}
-	
+
 	public float getX() {
 		return SquareRect.x;
 	}

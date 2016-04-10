@@ -18,10 +18,13 @@ public class TileManager {
 	int Y = 5;
 
 	// Edit this to change block sizes
-	public static final int Blocks_HeightandWidth = 16;
+	public static final int Blocks_HeightandWidth = 64;
 
-	// @TODO
-	// Have Fun!
+	/**
+	 * This class is used to manage the Tiles. Anything regarding tile movement
+	 * should be in this class.
+	 * 
+	 */
 
 	public TileManager() {
 
@@ -29,13 +32,15 @@ public class TileManager {
 
 		Height = (Gdx.graphics.getHeight() / Blocks_HeightandWidth) - 2;
 
+
 		// Builds the tiles to match the screen width with 1x1 block border
 		Nodes = new Square[Width][Height];
 
 		buildTiles();
 
 		PathFinding = new PathFinder(Nodes);
-		PathFinding.StartPathing(Nodes[0][Height/2-1], Nodes[Width-1][Height/2-1]);
+		PathFinding.StartPathing(Nodes[0][Height / 2 - 1],
+				Nodes[Width - 1][Height / 2 - 1]);
 
 	}
 
@@ -45,9 +50,9 @@ public class TileManager {
 		// Edit Constant to make blocks different size
 		int WidthandHeight = Blocks_HeightandWidth;
 
-		// This method is dedicated to Initializing all of the squares in the grid.
-		
-		
+		// This method is dedicated to Initializing all of the squares in the
+		// grid.
+
 		for (int i = 0; i < Nodes.length; i++) {
 
 			for (int B = 0; B < Nodes[i].length; B++) {
@@ -59,7 +64,6 @@ public class TileManager {
 						+ WidthandHeight, WidthandHeight, WidthandHeight);
 			}
 		}
-		
 
 	}
 
@@ -86,7 +90,6 @@ public class TileManager {
 
 	public void RenderPosText(SpriteBatch batch) {
 
-		
 		batch.begin();
 		// Renders stuff like position text
 
@@ -95,26 +98,27 @@ public class TileManager {
 			// String is +1 to account for offset of For statement
 
 			for (int B = 0; B < Nodes[i].length; B++) {
-				AssetLoader.Font.draw(batch,Integer.toString(i + 1) + ":"+Integer.toString(B + 1),
-						Nodes[i][B].getX() + 12, Nodes[i][B].getY() + 15);
+				AssetLoader.Font.draw(batch, Nodes[i][B].getCost() + "", Nodes[i][B].getX() + 12,
+						Nodes[i][B].getY() + 15);
 
 			}
 		}
 
 		batch.end();
+		
 	}
-	
-	public void UpdatePathing(){
+
+	public void UpdatePathing() {
 		PathFinding.UpdatePathfinder();
 	}
-	
-	public int getBlock_HeightandWidth(){
+
+	public int getBlock_HeightandWidth() {
 		return Blocks_HeightandWidth;
 	}
-	
-	public Square[][] getGrid(){
-		
+
+	public Square[][] getGrid() {
+
 		return Nodes;
 	}
-	
+
 }
