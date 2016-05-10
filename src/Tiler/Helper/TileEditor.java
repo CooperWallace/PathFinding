@@ -80,12 +80,12 @@ public class TileEditor {
 		/*
 		 * // Had a problem with using the divison remainder on the GetY method.
 		 * Messed around the removing it seems to work perfectly fine.
-		 */ 
-		 int MouseY = ((( Gdx.graphics.getHeight() - Gdx.input.getY())) /
-		 TileManager.Blocks_HeightandWidth); if(MouseY >0 && MouseY <=
-		  Nodes[Nodes.length-1].length){ // Offset for position
-		  IndicatorRawPosition.y = MouseY-1; }
-		 
+		 */
+		int MouseY = (((Gdx.graphics.getHeight() - Gdx.input.getY())) / TileManager.Blocks_HeightandWidth);
+		if (MouseY > 0 && MouseY <= Nodes[Nodes.length - 1].length) { 
+			// Offset for position
+			IndicatorRawPosition.y = MouseY - 1;
+		}
 
 		/*
 		 * Base for Keyboard input.
@@ -131,13 +131,11 @@ public class TileEditor {
 		// realtime editing.
 
 		if (Gdx.input.isKeyPressed(Keys.SPACE)) {
-			Nodes[(int) IndicatorRawPosition.x][(int) IndicatorRawPosition.y]
-					.setBlocked();
+			Nodes[(int) IndicatorRawPosition.x][(int) IndicatorRawPosition.y].setBlocked();
 		}
 
 		if (Gdx.input.isKeyPressed(Keys.E)) {
-			Nodes[(int) IndicatorRawPosition.x][(int) IndicatorRawPosition.y]
-					.setOpen();
+			Nodes[(int) IndicatorRawPosition.x][(int) IndicatorRawPosition.y].setOpen();
 		}
 
 	}

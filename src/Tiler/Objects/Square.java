@@ -7,7 +7,6 @@ public class Square {
 
 	private Rectangle SquareRect;
 	private Square Parent;
-	private int CostofMove;
 
 	private enum SquareType {
 		Closed, Open, Start, Blocked, Tracing;
@@ -35,16 +34,6 @@ public class Square {
 		this.Parent = Parent;
 	}
 
-	public void setCost(int heuristicsCost){
-		
-		this.CostofMove = heuristicsCost;
-		
-	}
-	
-	public int getCost() {
-		return CostofMove;
-
-	}
 
 	public Square getParent() {
 		return Parent;

@@ -20,8 +20,9 @@ public class PathFinder {
 	 * @param Nodes
 	 * 
 	 * 
-	 * @TODO 
-	 * - Heuristics
+	 * @TODO - Heuristics - Make this code reusable for mutliple parts of this
+	 *       program. - Return the path in an ArrayList rather than just
+	 *       changing the Squares
 	 */
 
 	public PathFinder(Square[][] Nodes) {
@@ -39,8 +40,8 @@ public class PathFinder {
 	}
 
 	/**
-	 * This Method is dedicated to scanning the grid until it finds a /
-	 * *suitable path between the starting point and the end point.
+	 * This Method is dedicated to scanning the grid until it finds a *suitable
+	 * path between the starting point and the end point has been found
 	 */
 	public void StartFrontier() {
 
@@ -55,43 +56,18 @@ public class PathFinder {
 		Queue<Square> queue = new LinkedList<Square>();
 
 		// queue needs to be cleared, if the pathing exits early it can leave
-		// some squares
-		// making a problrm if its rerun.
+		// some squares creating a problm if its rerun.
 		queue.clear();
 
 		// Add the starting node to the front of the queue, this is the starting
 		// point that the path is found from.
 		queue.add(Start);
-		Start.setCost(0);
 
 		while (!queue.isEmpty()) {
-			
+
 			// Peeks and gets the first Node from the queue
-			Square current = queue.peek();
-			
-			
-			// Sets a base Lowest cost based on the first node in the queue
-			int LowestHeuristic = current.getCost(); 
-			
-			System.out.println("Number of Possible squares " + queue.size());
-			
-			//Loops through all current Square objects in the queue.
-			for(Square TestHeuristicValue : queue){
-				System.out.println(TestHeuristicValue.getCost());
-				
-				// If the cost of the Square object is lower than the 
-				if(LowestHeuristic >= TestHeuristicValue.getCost() && TestHeuristicValue.isOpen()){
-					
-					current = TestHeuristicValue;
-				}
-				
-			}
-			System.out.println("Chosen " + current.getCost());
-			
-			
-			queue.remove(current);
-			
-			
+			Square current = queue.poll();
+
 			current.setClosed();
 			counter++;
 
@@ -104,9 +80,7 @@ public class PathFinder {
 
 			// Get Nodes to the Right
 			if (X + 1 < Nodes.length) {
-				
-				
-				
+
 				if (Nodes[X + 1][Y].isOpen()) {
 					queue.add(Nodes[X + 1][Y]);
 
@@ -118,9 +92,7 @@ public class PathFinder {
 					// Square object is set closed, it doesn't change the value
 					// of the original value
 					Nodes[X + 1][Y].setClosed();
-					
-					
-					Nodes[X+1][Y].setCost(CalculateHeuristicsCost(Nodes[X+1][Y]));
+
 				}
 
 			}
@@ -132,8 +104,6 @@ public class PathFinder {
 					Nodes[X][Y + 1].setClosed();
 
 					Nodes[X][Y + 1].setParent(current);
-
-					Nodes[X][Y+1].setCost(CalculateHeuristicsCost(Nodes[X][Y+1]));
 
 				}
 
@@ -147,8 +117,6 @@ public class PathFinder {
 					Nodes[X][Y - 1].setParent(current);
 					Nodes[X][Y - 1].setClosed();
 
-
-					Nodes[X][Y-1].setCost(CalculateHeuristicsCost(Nodes[X][Y-1]));
 				}
 
 			}
@@ -161,7 +129,6 @@ public class PathFinder {
 					Nodes[X - 1][Y].setParent(current);
 					Nodes[X - 1][Y].setClosed();
 
-
 				}
 			}
 
@@ -169,62 +136,63 @@ public class PathFinder {
 			// X and Y both need to have a + or - value to them to check for the
 			// Squares diagionally
 
-			
 			/*
-			// Top Right
-			if ((((X + 1) < Nodes.length) && (Y + 1 < Nodes[Nodes.length - 1].length))) {
-
-				if (Nodes[X + 1][Y + 1].isOpen()) {
-					queue.add(Nodes[X + 1][Y + 1]);
-
-					Nodes[X + 1][Y + 1].setParent(current);
-					Nodes[X + 1][Y + 1].setClosed();
-
-				}
-
-			}
-
-			// Top Left
-
-			if ((((X - 1) >= 0) && (Y + 1 < Nodes[Nodes.length - 1].length))) {
-
-				if (Nodes[X - 1][Y + 1].isOpen()) {
-					queue.add(Nodes[X - 1][Y + 1]);
-
-					Nodes[X - 1][Y + 1].setParent(current);
-					Nodes[X - 1][Y + 1].setClosed();
-
-				}
-
-			}
-
-			// Bottom Right
-
-			if ((X + 1 < Nodes.length) && ((Y - 1) >= 0)) {
-
-				if (Nodes[X + 1][Y - 1].isOpen()) {
-					queue.add(Nodes[X + 1][Y - 1]);
-
-					Nodes[X + 1][Y - 1].setParent(current);
-					Nodes[X + 1][Y - 1].setClosed();
-
-				}
-
-			}
-
-			// Bottom Left
-
-			if (((X - 1) >= 0) && ((Y - 1) >= 0)) {
-
-				if (Nodes[X - 1][Y - 1].isOpen()) {
-					queue.add(Nodes[X - 1][Y - 1]);
-
-					Nodes[X - 1][Y - 1].setParent(current);
-					Nodes[X - 1][Y - 1].setClosed();
-
-				}
-
-			}*/
+			 * // Top Right if ((((X + 1) < Nodes.length) && (Y + 1 <
+			 * Nodes[Nodes.length - 1].length))) {
+			 * 
+			 * if (Nodes[X + 1][Y + 1].isOpen()) { queue.add(Nodes[X + 1][Y +
+			 * 1]);
+			 * 
+			 * Nodes[X + 1][Y + 1].setParent(current); Nodes[X + 1][Y +
+			 * 1].setClosed();
+			 * 
+			 * }
+			 * 
+			 * }
+			 * 
+			 * // Top Left
+			 * 
+			 * if ((((X - 1) >= 0) && (Y + 1 < Nodes[Nodes.length - 1].length)))
+			 * {
+			 * 
+			 * if (Nodes[X - 1][Y + 1].isOpen()) { queue.add(Nodes[X - 1][Y +
+			 * 1]);
+			 * 
+			 * Nodes[X - 1][Y + 1].setParent(current); Nodes[X - 1][Y +
+			 * 1].setClosed();
+			 * 
+			 * }
+			 * 
+			 * }
+			 * 
+			 * // Bottom Right
+			 * 
+			 * if ((X + 1 < Nodes.length) && ((Y - 1) >= 0)) {
+			 * 
+			 * if (Nodes[X + 1][Y - 1].isOpen()) { queue.add(Nodes[X + 1][Y -
+			 * 1]);
+			 * 
+			 * Nodes[X + 1][Y - 1].setParent(current); Nodes[X + 1][Y -
+			 * 1].setClosed();
+			 * 
+			 * }
+			 * 
+			 * }
+			 * 
+			 * // Bottom Left
+			 * 
+			 * if (((X - 1) >= 0) && ((Y - 1) >= 0)) {
+			 * 
+			 * if (Nodes[X - 1][Y - 1].isOpen()) { queue.add(Nodes[X - 1][Y -
+			 * 1]);
+			 * 
+			 * Nodes[X - 1][Y - 1].setParent(current); Nodes[X - 1][Y -
+			 * 1].setClosed();
+			 * 
+			 * }
+			 * 
+			 * }
+			 */
 
 		}
 
@@ -262,9 +230,9 @@ public class PathFinder {
 			Current = Current.getParent();
 
 		}
-		
+
 		ENDPOINT.setStart();
-		
+
 		System.out.println("Stopped");
 
 	}
@@ -290,8 +258,7 @@ public class PathFinder {
 					// Kills the Parent link so that the Frontier can reset it
 					// to a new value.
 					Nodes[i][n].KillParentLink();
-					
-					Nodes[i][n].setCost(0);
+
 				}
 
 			}
@@ -302,27 +269,6 @@ public class PathFinder {
 
 	}
 
-	public int CalculateHeuristicsCost(Square Evalutation){
-		/*	This method is dedicated to finding the Heuristic value from the Current object to the End Object. 
-		 * 		Basically calculated the Distance from Current to the End Object.
-		 * 
-		 *  		Needs to use the Node position rather than the Raw positional value!
-		 *  		Raw being .GetY and .GetX
-		 *
-		 *			Math :   return abs(a.x - b.x) + abs(a.y - b.y)
-		 **/
-
-		int EvaluationX = (int) (Evalutation.getX() / TileManager.Blocks_HeightandWidth) - 1;
-		int EvaluationY = (int) (Evalutation.getY() / TileManager.Blocks_HeightandWidth) - 1;
-
-		int EndX = (int) (End.getX() / TileManager.Blocks_HeightandWidth) - 1;
-		int EndY = (int) (End.getY() / TileManager.Blocks_HeightandWidth) - 1;
-		float TotalCost = Math.abs(EvaluationX - EndX) + Math.abs(EvaluationY - EndY);
-		
-		return (int)TotalCost;
-	}
-	
-	
 	public boolean ifExists(Square Test, int I) {
 		if ((Test.getX() / 64 - 1) <= Nodes[Nodes.length - 1].length) {
 			if ((Test.getY() / 64 - 1) - 1 <= Nodes.length) {
