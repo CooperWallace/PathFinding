@@ -14,7 +14,7 @@ public class TileManager {
 	private RoomGenerator RoomGen;
 
 	// Edit this to change block sizes
-	public static final int Blocks_HeightandWidth = 10;
+	public static final int Blocks_HeightandWidth = 16;
 
 	/**
 	 * This class is used to manage the Tiles. Anything regarding tile movement
@@ -83,6 +83,10 @@ public class TileManager {
 				shape.end();
 			}
 		}
+		
+		
+		
+		
 	}
 
 	public void RenderPosText(SpriteBatch batch) {

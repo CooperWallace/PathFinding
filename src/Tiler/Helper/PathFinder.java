@@ -132,67 +132,6 @@ public class PathFinder {
 				}
 			}
 
-			// Diagonial support.
-			// X and Y both need to have a + or - value to them to check for the
-			// Squares diagionally
-
-			/*
-			 * // Top Right if ((((X + 1) < Nodes.length) && (Y + 1 <
-			 * Nodes[Nodes.length - 1].length))) {
-			 * 
-			 * if (Nodes[X + 1][Y + 1].isOpen()) { queue.add(Nodes[X + 1][Y +
-			 * 1]);
-			 * 
-			 * Nodes[X + 1][Y + 1].setParent(current); Nodes[X + 1][Y +
-			 * 1].setClosed();
-			 * 
-			 * }
-			 * 
-			 * }
-			 * 
-			 * // Top Left
-			 * 
-			 * if ((((X - 1) >= 0) && (Y + 1 < Nodes[Nodes.length - 1].length)))
-			 * {
-			 * 
-			 * if (Nodes[X - 1][Y + 1].isOpen()) { queue.add(Nodes[X - 1][Y +
-			 * 1]);
-			 * 
-			 * Nodes[X - 1][Y + 1].setParent(current); Nodes[X - 1][Y +
-			 * 1].setClosed();
-			 * 
-			 * }
-			 * 
-			 * }
-			 * 
-			 * // Bottom Right
-			 * 
-			 * if ((X + 1 < Nodes.length) && ((Y - 1) >= 0)) {
-			 * 
-			 * if (Nodes[X + 1][Y - 1].isOpen()) { queue.add(Nodes[X + 1][Y -
-			 * 1]);
-			 * 
-			 * Nodes[X + 1][Y - 1].setParent(current); Nodes[X + 1][Y -
-			 * 1].setClosed();
-			 * 
-			 * }
-			 * 
-			 * }
-			 * 
-			 * // Bottom Left
-			 * 
-			 * if (((X - 1) >= 0) && ((Y - 1) >= 0)) {
-			 * 
-			 * if (Nodes[X - 1][Y - 1].isOpen()) { queue.add(Nodes[X - 1][Y -
-			 * 1]);
-			 * 
-			 * Nodes[X - 1][Y - 1].setParent(current); Nodes[X - 1][Y -
-			 * 1].setClosed();
-			 * 
-			 * }
-			 * 
-			 * }
-			 */
 
 		}
 
@@ -269,9 +208,9 @@ public class PathFinder {
 
 	}
 
-	public boolean ifExists(Square Test, int I) {
-		if ((Test.getX() / 64 - 1) <= Nodes[Nodes.length - 1].length) {
-			if ((Test.getY() / 64 - 1) - 1 <= Nodes.length) {
+	public boolean ifExists(Square Test) {
+		if ((Test.getX() / TileManager.Blocks_HeightandWidth - 1) <= Nodes[Nodes.length - 1].length) {
+			if ((Test.getY() / TileManager.Blocks_HeightandWidth - 1) - 1 <= Nodes.length) {
 
 				return true;
 			}

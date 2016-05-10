@@ -9,7 +9,7 @@ public class Square {
 	private Square Parent;
 
 	private enum SquareType {
-		Closed, Open, Start, Blocked, Tracing;
+		Closed, Open, Start, Blocked, Tracing, Floor;
 	}
 
 	private SquareType SqTy;
@@ -70,6 +70,9 @@ public class Square {
 		SqTy = SquareType.Start;
 	}
 	
+	public void setFloor(){
+		SqTy = SquareType.Floor;
+	}
 
 	public void setTracing() {
 		SqTy = SquareType.Tracing;
@@ -77,8 +80,9 @@ public class Square {
 
 	/* Getter Classes */
 	public Color getColor() {
+		
 		if (SqTy == SquareType.Closed) {
-			return Color.BLUE;
+			return Color.LIGHT_GRAY;
 		} else if (SqTy == SquareType.Open) {
 			return Color.LIGHT_GRAY;
 		} else if (SqTy == SquareType.Start) {
@@ -87,7 +91,11 @@ public class Square {
 			return Color.YELLOW;
 		} else if (SqTy == SquareType.Tracing) {
 			return Color.RED;
-		} else {
+		}else if(SqTy == SquareType.Floor){
+			return Color.DARK_GRAY;
+			
+		}
+		else {
 			return Color.BLACK;
 		}
 
@@ -107,6 +115,15 @@ public class Square {
 			return true;
 		}
 
+		return false;
+	}
+	
+	
+	public boolean isFloor(){
+		if(SqTy == SquareType.Floor){
+			return true;
+		}
+		
 		return false;
 	}
 
