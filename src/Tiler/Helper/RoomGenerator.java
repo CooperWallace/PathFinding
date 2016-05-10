@@ -3,9 +3,11 @@ package Tiler.Helper;
 import java.util.ArrayList;
 import java.util.Random;
 
+import Tiler.Objects.Room;
 import Tiler.Objects.Square;
 
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 
 public class RoomGenerator {
 
@@ -13,10 +15,12 @@ public class RoomGenerator {
 	 * This class is dedicated to Procedurally Generating Rooms.
 	 * 
 	 * @ TODO
+	 * 	- Refactor
+	 * 	- Split into cleaner methods
 	 */
 
 	private Square[][] Nodes;
-	private ArrayList<Rectangle> Rooms;
+	private ArrayList<Room> Rooms;
 	private TunnelPathFinder TunnelDigger;
 
 	// The Max Number without going outside of the grid and throwing an error.
@@ -28,11 +32,11 @@ public class RoomGenerator {
 		this.Nodes = Nodes;
 
 		// A rectangle is used so that its easier to check for collisions.
-		Rooms = new ArrayList<Rectangle>();
+		Rooms = new ArrayList<Room>();
 
 		MaxHeight = Nodes[Nodes.length - 1].length - 1;
 		MaxWidth = Nodes.length - 1;
-		
+
 		TunnelDigger = new TunnelPathFinder(Nodes);
 
 	}
@@ -41,9 +45,7 @@ public class RoomGenerator {
 		/*
 		 * Try to generate a Random room within the limits of the Nodes Grid.
 		 * 
-		 * - Needs to be able to test if a room is overlapping another 
-		 * - If theres space between rooms. 
-		 * - Maximum size
+		 * - Needs to be able to test if a room is overlapping another - If theres space between rooms. - Maximum size
 		 * of the rooms.
 		 */
 
@@ -85,7 +87,7 @@ public class RoomGenerator {
 
 				// Create a temporary room to test for overlapping other rooms.
 				// This room is bigger by 1 on all sides.
-				Rectangle Temp = new Rectangle(RandomX - 1, RandomY - 1, RandomWidth + 2, RandomHeight + 2);
+				Room Temp = new Room(new Rectangle(RandomX - 1, RandomY - 1, RandomWidth + 2, RandomHeight + 2));
 
 				/*
 				 * This For loop test got kind of tricky. You cannot simply add the room to the ArrayList if it doesnt
@@ -94,21 +96,20 @@ public class RoomGenerator {
 
 				boolean IsOverlapping = false;
 
-				for (Rectangle room : Rooms) {
+				for (Room room : Rooms) {
 
 					// If the room overlaps at all, it sets the boolean as True.
 					// Discarding it from being added to the ArrayList
-					if (Temp.overlaps(room)) {
+					if (Temp.getRectangle().overlaps(room.getRectangle())) {
 						IsOverlapping = true;
-						
 
 					}
 				}
 
 				// If the Room didn't end up overlapping add it to the ArrayList
 				if (IsOverlapping == false) {
-					Rooms.add(new Rectangle(RandomX, RandomY, RandomWidth, RandomHeight));
-					
+					Rooms.add(new Room(new Rectangle(RandomX, RandomY, RandomWidth, RandomHeight)));
+
 				}
 
 			} else {
@@ -116,70 +117,63 @@ public class RoomGenerator {
 			}
 
 		}
-
 		
 		// Dig path between rooms.
-		for(int RoomNum =1; RoomNum < Rooms.size(); RoomNum++){
-			
-			Rectangle Temp = Rooms.get(RoomNum-1);
-			Rectangle Temp2 = Rooms.get(RoomNum);
-			
-			// Calculate Middle Point.
-			int MidX =  Math.round((Temp.getX() + (Temp.getWidth() / 2)));
-			int MidY = Math.round((Temp.getY() + (Temp.getHeight() / 2)));
-			
-
-			int MidX2 =  Math.round((Temp2.getX() + (Temp2.getWidth() / 2)));
-			int MidY2 = Math.round((Temp2.getY() + (Temp2.getHeight() / 2)));
-			
-			Square Original = Nodes[MidX][MidY];
-
-			Square NextRoom = Nodes[MidX2][MidY2];
-			
-			TunnelDigger.StartPathing(Original, NextRoom);
-			
+		if(Rooms.size() != 0){
+			Rooms.get(1).SetConnectedtoMain();
 		}
 		
 		
-		
-		
+
+		for (int RoomNum = 0; RoomNum < Rooms.size(); RoomNum++) {
+
+			Room Temp = Rooms.get(RoomNum - 1);
+			Room Temp2 = Rooms.get(RoomNum);
+
+			Vector2 OriginalRoomCenter = Temp.CenterPoint();
+			Vector2 NextRoomCenter = Temp2.CenterPoint();
+
+			Square Original = Nodes[(int) OriginalRoomCenter.x][(int) OriginalRoomCenter.y];
+
+			Square NextRoom = Nodes[(int) NextRoomCenter.x][(int) NextRoomCenter.y];
+
+			
+			
+			
+			
+			TunnelDigger.StartPathing(Original, NextRoom);
+
+		}
+
 		// Properly set the rooms in the Grid to appear.
-		for (Rectangle Room : Rooms) {
+		// Set the walls and floors of each of the squares within a room.
+		
+		for (Room RoomTest : Rooms) {
 
-			for (int X = (int) Room.getX(); X < (Room.getX() + Room.getWidth()); X++) {
-				for (int Y = (int) Room.getY(); Y < (Room.getY() + Room.getHeight()); Y++) {
+			for (int X = (int) RoomTest.getRectangle().getX(); X < (RoomTest.getRectangle().getX() + RoomTest
+					.getRectangle().getWidth()); X++) {
+				for (int Y = (int) RoomTest.getRectangle().getY(); Y < (RoomTest.getRectangle().getY() + RoomTest
+						.getRectangle().getHeight()); Y++) {
 
-					if(!Nodes[X][Y].isFloor()){
-					Nodes[X][Y].setBlocked();
+					if (!Nodes[X][Y].isFloor()) {
+						Nodes[X][Y].setBlocked();
 					}
 
 				}
 
 			}
-			
-			for (int X = (int) Room.getX()+1; X < (Room.getX() + Room.getWidth()-1); X++) {
-				for (int Y = (int) Room.getY()+1; Y < (Room.getY() + Room.getHeight())-1; Y++) {
+
+			for (int X = (int) RoomTest.getRectangle().getX() + 1; X < (RoomTest.getRectangle().getX()
+					+ RoomTest.getRectangle().getWidth() - 1); X++) {
+				for (int Y = (int) RoomTest.getRectangle().getY() + 1; Y < (RoomTest.getRectangle().getY() + RoomTest
+						.getRectangle().getHeight()) - 1; Y++) {
 
 					Nodes[X][Y].setFloor();
 
 				}
 
 			}
-			
-			
-			
-			
-
 		}
-		
-		
-		
-		
-		
-		
-		
-		
 
 	}
-
 }
