@@ -1,6 +1,7 @@
 package Tiler.Helper;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 
 import Tiler.Objects.Room;
@@ -14,9 +15,7 @@ public class RoomGenerator {
 	/*
 	 * This class is dedicated to Procedurally Generating Rooms.
 	 * 
-	 * @ TODO
-	 * 	- Refactor
-	 * 	- Split into cleaner methods
+	 * @ TODO - Refactor - Split into cleaner methods
 	 */
 
 	private Square[][] Nodes;
@@ -42,6 +41,19 @@ public class RoomGenerator {
 	}
 
 	public void Generate() {
+
+		// This method generates the rooms.
+		GenerateRooms();
+
+		// Makes paths between rooms
+		TunnelPathing();
+
+		// Takes the rooms and applies them to the grid.
+		TranslatetoGrid();
+
+	}
+
+	public void GenerateRooms() {
 		/*
 		 * Try to generate a Random room within the limits of the Nodes Grid.
 		 * 
@@ -117,39 +129,42 @@ public class RoomGenerator {
 			}
 
 		}
-		
+
+	}
+
+	public void TunnelPathing() {
+
 		// Dig path between rooms.
-		if(Rooms.size() != 0){
-			Rooms.get(1).SetConnectedtoMain();
-		}
-		
-		
 
-		for (int RoomNum = 0; RoomNum < Rooms.size(); RoomNum++) {
+		// Set the main room.
+		// Dig path between rooms.
+		for (int RoomNum = 0; RoomNum < Rooms.size()-1; RoomNum++) {
 
-			Room Temp = Rooms.get(RoomNum - 1);
-			Room Temp2 = Rooms.get(RoomNum);
+			Room Temp = Rooms.get(RoomNum);
+			Room Temp2 = Rooms.get(RoomNum+1);
 
-			Vector2 OriginalRoomCenter = Temp.CenterPoint();
-			Vector2 NextRoomCenter = Temp2.CenterPoint();
+			// Calculate Middle Point.
+			Vector2 MidOrig = Temp.CenterPoint();
 
-			Square Original = Nodes[(int) OriginalRoomCenter.x][(int) OriginalRoomCenter.y];
+			Square Original = Nodes[(int) MidOrig.x][(int) MidOrig.y];
 
-			Square NextRoom = Nodes[(int) NextRoomCenter.x][(int) NextRoomCenter.y];
+			Square NextRoom = Nodes[(int) Temp2.CenterPoint().x][(int) Temp2.CenterPoint().y];
 
-			
-			
-			
-			
 			TunnelDigger.StartPathing(Original, NextRoom);
 
 		}
+		
+
+	}
+
+	public void TranslatetoGrid() {
 
 		// Properly set the rooms in the Grid to appear.
 		// Set the walls and floors of each of the squares within a room.
-		
+
 		for (Room RoomTest : Rooms) {
 
+			// Set the outside of the room as blocked
 			for (int X = (int) RoomTest.getRectangle().getX(); X < (RoomTest.getRectangle().getX() + RoomTest
 					.getRectangle().getWidth()); X++) {
 				for (int Y = (int) RoomTest.getRectangle().getY(); Y < (RoomTest.getRectangle().getY() + RoomTest
@@ -163,6 +178,8 @@ public class RoomGenerator {
 
 			}
 
+			// Set the inside of the rooms as floors
+
 			for (int X = (int) RoomTest.getRectangle().getX() + 1; X < (RoomTest.getRectangle().getX()
 					+ RoomTest.getRectangle().getWidth() - 1); X++) {
 				for (int Y = (int) RoomTest.getRectangle().getY() + 1; Y < (RoomTest.getRectangle().getY() + RoomTest
@@ -173,7 +190,9 @@ public class RoomGenerator {
 				}
 
 			}
+
 		}
 
 	}
+
 }

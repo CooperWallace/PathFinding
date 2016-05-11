@@ -120,7 +120,7 @@ public class Square {
 	
 	
 	public boolean isFloor(){
-		if(SqTy == SquareType.Floor){
+		if(SqTy == SquareType.Floor || SqTy == SquareType.Tracing){
 			return true;
 		}
 		

@@ -1,5 +1,6 @@
 package Tiler.Helper;
 
+import Tiler.Objects.Room;
 import Tiler.Objects.Square;
 
 public class TunnelPathFinder extends PathFinder {
@@ -9,6 +10,16 @@ public class TunnelPathFinder extends PathFinder {
 		// TODO Auto-generated constructor stub
 	}
 
+	public void PathBetweenRooms(Room Start, Room End){
+		Square StartSq = new Square((int)Start.CenterPoint().x, (int)Start.CenterPoint().y, TileManager.Blocks_HeightandWidth, TileManager.Blocks_HeightandWidth);
+
+		Square EndSq = new Square((int)End.CenterPoint().x, (int)End.CenterPoint().y, TileManager.Blocks_HeightandWidth, TileManager.Blocks_HeightandWidth);
+		
+		
+		StartPathing(StartSq, EndSq);
+	}
+	
+	
 	@Override
 	public void Retrace(Square EndPoint) {
 
@@ -26,9 +37,9 @@ public class TunnelPathFinder extends PathFinder {
 		while (Current.hasParent()) {
 
 			// Set the path red
-			Current.setFloor();
+			Current.setTracing();
 			// set the parent to be sure that it was set originally.
-			Current.getParent().setFloor();
+			Current.getParent().setTracing();
 
 			// Set to the current so that it can loop and find the start.
 			Current = Current.getParent();

@@ -46,6 +46,10 @@ public class Room {
 	public Rectangle getRectangle() {
 		return RoomDimensions;
 	}
+	
+	public Room returnParent(){
+		return ParentRoom;
+	}
 
 	// Returns the center point in a 2D Vector.
 	public Vector2 CenterPoint() {
@@ -54,6 +58,17 @@ public class Room {
 		MainPoint.y = Math.round((RoomDimensions.getY() + (RoomDimensions.getHeight() / 2)));
 
 		return MainPoint;
+	}
+	
+	
+	// Checks the distance between two rooms.
+	public int returnDistanceBetweenRooms(Room TestingRoom){
+		float Value = Math.abs(CenterPoint().x - TestingRoom.CenterPoint().x) + Math.abs(CenterPoint().y - TestingRoom.CenterPoint().x);
+		
+		return (int)Value;
+		
+		
+		
 	}
 
 }
