@@ -63,7 +63,7 @@ public class Room {
 	
 	// Checks the distance between two rooms.
 	public int returnDistanceBetweenRooms(Room TestingRoom){
-		float Value = Math.abs(CenterPoint().x - TestingRoom.CenterPoint().x) + Math.abs(CenterPoint().y - TestingRoom.CenterPoint().x);
+		float Value = Math.abs(this.CenterPoint().x - TestingRoom.CenterPoint().x) + Math.abs(this.CenterPoint().y - TestingRoom.CenterPoint().x);
 		
 		return (int)Value;
 		

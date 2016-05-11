@@ -29,6 +29,10 @@ public class Square {
 
 	}
 
+	public String toString() {
+		return "X: " + SquareRect.x + "Y: " + SquareRect.y;
+	}
+
 	// Parent Methods for pathfinding.
 	public void setParent(Square Parent) {
 		this.Parent = Parent;
@@ -89,10 +93,9 @@ public class Square {
 		case Blocked:
 			return Color.YELLOW;
 		case Tracing:
-		return Color.RED;
+			return Color.RED;
 		case Floor:
 			return Color.DARK_GRAY;
-		
 		default:
 			return Color.BLACK;
 
@@ -118,7 +121,7 @@ public class Square {
 	}
 
 	public boolean isFloor() {
-		if (SqTy == SquareType.Floor || SqTy == SquareType.Tracing) {
+		if (SqTy == SquareType.Floor) {
 			return true;
 		}
 

@@ -16,6 +16,8 @@ public class TunnelPathFinder extends PathFinder {
 		Square EndSq = new Square((int)End.CenterPoint().x, (int)End.CenterPoint().y, TileManager.Blocks_HeightandWidth, TileManager.Blocks_HeightandWidth);
 		
 		
+		UpdatePathfinder();
+		
 		StartPathing(StartSq, EndSq);
 	}
 	
@@ -31,21 +33,37 @@ public class TunnelPathFinder extends PathFinder {
 		// beginning.
 		Square Current = EndPoint;
 
-
 		// Enters a loop to retrace the path to the beginning
 		while (Current.hasParent()) {
 
 			// Set the path red
-			Current.setTracing();
+			Current.setFloor();
 			// set the parent to be sure that it was set originally.
-			Current.getParent().setTracing();
+			Current.getParent().setFloor();
 
 			// Set to the current so that it can loop and find the start.
 			Current = Current.getParent();
 
 		}
 
-		EndPoint.setStart();
+	}
+	
+	@Override
+	public void UpdatePathfinder() {
+
+		// This is needed to set all of the unblocked blocks to open so that
+		// they can be researched. If they aren't reset to nothing then the
+		// program will retrace it from the existing parents. Which can make it
+		// go through blocked blocks.
+
+		for (int i = 0; i < Nodes.length; i++) {
+
+			for (int n = 0; n < Nodes[Nodes.length - 1].length; n++) {
+				Nodes[i][n].KillParentLink();
+
+			}
+		}
+
 
 	}
 

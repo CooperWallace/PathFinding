@@ -29,9 +29,11 @@ public class RoomGenerator {
 
 		this.Nodes = Nodes;
 
-		// A rectangle is used so that its easier to check for collisions.
+		// Room ArrayList is created to store all of the Rooms. There's a rectangle inside of it to help check for
+		// Collisions.
 		Rooms = new ArrayList<Room>();
 
+		// Gets the Max Size of the Grid. Rooms need to be generated within these Max Values.
 		MaxHeight = Nodes[Nodes.length - 1].length - 1;
 		MaxWidth = Nodes.length - 1;
 
@@ -49,7 +51,7 @@ public class RoomGenerator {
 
 		// Takes the rooms and applies them to the grid.
 		TranslatetoGrid();
-		System.out.println(Rooms.size());
+		System.out.println("There are a total of " + Rooms.size() + " rooms");
 
 	}
 
@@ -63,8 +65,8 @@ public class RoomGenerator {
 
 		Random rand = new Random();
 
-		int MaxRoomSize = 10;
-		int MinRoomSize = 5;
+		int MaxRoomSize = 20;
+		int MinRoomSize = 10;
 
 		/*
 		 * This trying loop keeps on repeating until a certain threshold is reached where there are no more possible
@@ -82,13 +84,13 @@ public class RoomGenerator {
 			int RandomY = rand.nextInt(MaxHeight - RandomHeight);
 
 			// Contiunes to generate until suitable size is found that is within
-			// the Maximum and Minimum value
+			// the Maximum and Minimum value of the room
 			while (!(RandomHeight >= MinRoomSize && RandomHeight <= MaxRoomSize)) {
 				RandomHeight = rand.nextInt(MaxRoomSize);
 			}
 
 			// Contiunes to generate until suitable size is found that is within
-			// the Maximum and Minimum value
+			// the Maximum and Minimum value of the room
 			while (!(RandomWidth >= MinRoomSize && RandomWidth <= MaxRoomSize)) {
 				RandomWidth = rand.nextInt(MaxRoomSize);
 			}
@@ -102,8 +104,9 @@ public class RoomGenerator {
 				Room Temp = new Room(new Rectangle(RandomX - 1, RandomY - 1, RandomWidth + 2, RandomHeight + 2));
 
 				/*
-				 * This For loop test got kind of tricky. You cannot simply add the room to the ArrayList if it doesnt
-				 * overlap. If you do it will add and try to test against itself to remove itself throwing an error.
+				 * This For loop test got kind of tricky. You cannot simply add the room to the ArrayList and check if
+				 * it doesnt overlap. If you do it will add and try to test against itself to remove itself throwing an
+				 * error (ConcurrentModificationException).
 				 */
 
 				boolean IsOverlapping = false;
@@ -139,12 +142,14 @@ public class RoomGenerator {
 		// Set the main room.
 		// Dig path between rooms.
 
-		// Flawed System Currently:
-		// Bug: Sometimes a room wont be connected. It seems to be a problem with the index number.
+		/*
+		 * Flawed System Currently: Bug: The pathing between the rooms seems to make a problem with some rooms not being
+		 * connected. You need to remove all of the parents before trying to get to another spot. Otherwise it'll exit
+		 * early for some reason. Can't articulate the reason
+		 */
 
 		for (int RoomNum = 0; RoomNum < Rooms.size() - 1; RoomNum++) {
-
-			System.out.println(RoomNum + " Max:" + (Rooms.size() - 1));
+			System.out.print((1 + RoomNum) + " ");
 
 			Room Temp = Rooms.get(RoomNum);
 			Room Temp2 = Rooms.get(RoomNum + 1);
@@ -156,23 +161,12 @@ public class RoomGenerator {
 
 			Square NextRoom = Nodes[(int) Temp2.CenterPoint().x][(int) Temp2.CenterPoint().y];
 
-			if (!(Original.getRectangle().x == NextRoom.getRectangle().x)
-					&& !(Original.getRectangle().y == NextRoom.getRectangle().y)) {
+			TunnelDigger.StartPathing(Original, NextRoom);
+			System.out.println(Temp.CenterPoint() + " Linked to " + Temp2.CenterPoint());
 
-				TunnelDigger.StartPathing(Original, NextRoom);
-				System.out.println(Original.getRectangle() + "Linked to " + NextRoom.getRectangle());
-				Temp.SetConnectedtoMain();
-				Temp2.SetConnectedtoMain();
-			}
 		}
 
 		System.out.println(".");
-		for (Room test : Rooms) {
-
-			if (!test.isConnected()) {
-				System.out.println("Bug: Not connected");
-			}
-		}
 
 	}
 

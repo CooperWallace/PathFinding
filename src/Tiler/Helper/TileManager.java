@@ -15,7 +15,7 @@ public class TileManager {
 	private RoomGenerator RoomGen;
 
 	// Edit this to change block sizes
-	public static final int Blocks_HeightandWidth = 32;
+	public static final int Blocks_HeightandWidth = 16;
 
 	/**
 	 * This class is used to manage the Tiles. Anything regarding tile movement
@@ -38,10 +38,6 @@ public class TileManager {
 		RoomGen.Generate();
 
 		PathFinding = new PathFinder(Nodes);
-		/*
-		 * PathFinding.StartPathing(Nodes[0][Height / 2 - 1], Nodes[Width -
-		 * 1][Height / 2 - 1]);
-		 */
 
 	}
 
@@ -100,6 +96,10 @@ public class TileManager {
 
 	public void RenderPosText(SpriteBatch batch) {
 
+		/*	This method is only really ment to be used for debugging purposes
+		 * 
+		 * */
+		
 		batch.begin();
 		// Renders stuff like position text
 
@@ -108,7 +108,9 @@ public class TileManager {
 			// String is +1 to account for offset of For statement
 
 			for (int B = 0; B < Nodes[i].length; B++) {
-				AssetLoader.Font.draw(batch, "", Nodes[i][B].getX() + 12, Nodes[i][B].getY() + 15);
+				//AssetLoader.Font.draw(batch, "Y: " + B , Nodes[i][B].getX() + 12, Nodes[i][B].getY() + 15);
+				//AssetLoader.Font.draw(batch, "X: " + i, Nodes[i][B].getX() + 12, Nodes[i][B].getY() + 30);
+
 
 			}
 		}

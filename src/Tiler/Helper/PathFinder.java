@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class PathFinder {
 
-	private Square[][] Nodes;
+	 Square[][] Nodes;
 	private Square Start;
 	private Square End;
 
@@ -45,7 +45,6 @@ public class PathFinder {
 	 */
 	public void StartFrontier() {
 
-		System.out.println("Start Frontier");
 
 		// A debugging feature to see how many times the queue is run, and
 		// essentially how many blocks were searched.
@@ -62,6 +61,7 @@ public class PathFinder {
 		// Add the starting node to the front of the queue, this is the starting
 		// point that the path is found from.
 		queue.add(Start);
+		Start.setStart();
 
 		while (!queue.isEmpty()) {
 
@@ -71,8 +71,8 @@ public class PathFinder {
 			current.setClosed();
 			counter++;
 
-			int X = (int) (current.getX() / TileManager.Blocks_HeightandWidth) - 1;
-			int Y = (int) (current.getY() / TileManager.Blocks_HeightandWidth) - 1;
+			int X = (int) (current.getX() / TileManager.Blocks_HeightandWidth)-1;
+			int Y = (int) (current.getY() / TileManager.Blocks_HeightandWidth)-1;
 
 			if (current == End) {
 				break;
@@ -135,7 +135,6 @@ public class PathFinder {
 
 		}
 
-		System.out.println("End with " + counter);
 
 	}
 
@@ -155,7 +154,6 @@ public class PathFinder {
 		// beginning.
 		Square Current = ENDPOINT;
 
-		System.out.println("Retrace Started");
 
 		// Enters a loop to retrace the path to the beginning
 		while (Current.hasParent()) {
@@ -171,8 +169,6 @@ public class PathFinder {
 		}
 
 		ENDPOINT.setStart();
-
-		System.out.println("Stopped");
 
 	}
 
