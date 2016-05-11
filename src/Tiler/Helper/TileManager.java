@@ -3,6 +3,7 @@ package Tiler.Helper;
 import Tiler.Objects.Square;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -14,7 +15,7 @@ public class TileManager {
 	private RoomGenerator RoomGen;
 
 	// Edit this to change block sizes
-	public static final int Blocks_HeightandWidth = 16;
+	public static final int Blocks_HeightandWidth = 32;
 
 	/**
 	 * This class is used to manage the Tiles. Anything regarding tile movement
@@ -68,6 +69,14 @@ public class TileManager {
 
 	public void render(ShapeRenderer shape) {
 
+		
+		if(Gdx.input.isKeyPressed(Keys.SPACE)){
+			
+			buildTiles();
+			RoomGen.Generate();
+		}
+		
+		
 		// Renders both the Rectangle and the lines
 		for (int i = 0; i < Nodes.length; i++) {
 

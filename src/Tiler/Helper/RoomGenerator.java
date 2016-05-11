@@ -1,7 +1,6 @@
 package Tiler.Helper;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Random;
 
 import Tiler.Objects.Room;
@@ -50,6 +49,7 @@ public class RoomGenerator {
 
 		// Takes the rooms and applies them to the grid.
 		TranslatetoGrid();
+		System.out.println(Rooms.size());
 
 	}
 
@@ -63,8 +63,8 @@ public class RoomGenerator {
 
 		Random rand = new Random();
 
-		int MaxRoomSize = 20;
-		int MinRoomSize = 10;
+		int MaxRoomSize = 10;
+		int MinRoomSize = 5;
 
 		/*
 		 * This trying loop keeps on repeating until a certain threshold is reached where there are no more possible
@@ -138,10 +138,16 @@ public class RoomGenerator {
 
 		// Set the main room.
 		// Dig path between rooms.
-		for (int RoomNum = 0; RoomNum < Rooms.size()-1; RoomNum++) {
+
+		// Flawed System Currently:
+		// Bug: Sometimes a room wont be connected. It seems to be a problem with the index number.
+
+		for (int RoomNum = 0; RoomNum < Rooms.size() - 1; RoomNum++) {
+
+			System.out.println(RoomNum + " Max:" + (Rooms.size() - 1));
 
 			Room Temp = Rooms.get(RoomNum);
-			Room Temp2 = Rooms.get(RoomNum+1);
+			Room Temp2 = Rooms.get(RoomNum + 1);
 
 			// Calculate Middle Point.
 			Vector2 MidOrig = Temp.CenterPoint();
@@ -150,10 +156,23 @@ public class RoomGenerator {
 
 			Square NextRoom = Nodes[(int) Temp2.CenterPoint().x][(int) Temp2.CenterPoint().y];
 
-			TunnelDigger.StartPathing(Original, NextRoom);
+			if (!(Original.getRectangle().x == NextRoom.getRectangle().x)
+					&& !(Original.getRectangle().y == NextRoom.getRectangle().y)) {
 
+				TunnelDigger.StartPathing(Original, NextRoom);
+				System.out.println(Original.getRectangle() + "Linked to " + NextRoom.getRectangle());
+				Temp.SetConnectedtoMain();
+				Temp2.SetConnectedtoMain();
+			}
 		}
-		
+
+		System.out.println(".");
+		for (Room test : Rooms) {
+
+			if (!test.isConnected()) {
+				System.out.println("Bug: Not connected");
+			}
+		}
 
 	}
 

@@ -31,7 +31,6 @@ public class TunnelPathFinder extends PathFinder {
 		// beginning.
 		Square Current = EndPoint;
 
-		System.out.println("Retrace Started");
 
 		// Enters a loop to retrace the path to the beginning
 		while (Current.hasParent()) {
@@ -47,8 +46,6 @@ public class TunnelPathFinder extends PathFinder {
 		}
 
 		EndPoint.setStart();
-
-		System.out.println("Stopped");
 
 	}
 

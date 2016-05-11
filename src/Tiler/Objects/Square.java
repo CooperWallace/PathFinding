@@ -16,11 +16,11 @@ public class Square {
 
 	/**
 	 * 
-	 * @param x, y, height, width - All of these are used to set the
-	 *            Rectangle so that the Square may be rendered.
+	 * @param x
+	 *            , y, height, width - All of these are used to set the Rectangle so that the Square may be rendered.
 	 * 
 	 * @param CostofMove
-	 * 			The calculated Heuristic cost from the block to the end point.
+	 *            The calculated Heuristic cost from the block to the end point.
 	 */
 
 	public Square(int x, int y, int height, int width) {
@@ -33,7 +33,6 @@ public class Square {
 	public void setParent(Square Parent) {
 		this.Parent = Parent;
 	}
-
 
 	public Square getParent() {
 		return Parent;
@@ -65,12 +64,12 @@ public class Square {
 	public void setBlocked() {
 		SqTy = SquareType.Blocked;
 	}
-	
+
 	public void setStart() {
 		SqTy = SquareType.Start;
 	}
-	
-	public void setFloor(){
+
+	public void setFloor() {
 		SqTy = SquareType.Floor;
 	}
 
@@ -80,23 +79,23 @@ public class Square {
 
 	/* Getter Classes */
 	public Color getColor() {
-		
-		if (SqTy == SquareType.Closed) {
+		switch (SqTy) {
+		case Closed:
 			return Color.LIGHT_GRAY;
-		} else if (SqTy == SquareType.Open) {
+		case Open:
 			return Color.LIGHT_GRAY;
-		} else if (SqTy == SquareType.Start) {
+		case Start:
 			return Color.GREEN;
-		} else if (SqTy == SquareType.Blocked) {
+		case Blocked:
 			return Color.YELLOW;
-		} else if (SqTy == SquareType.Tracing) {
-			return Color.RED;
-		}else if(SqTy == SquareType.Floor){
+		case Tracing:
+		return Color.RED;
+		case Floor:
 			return Color.DARK_GRAY;
-			
-		}
-		else {
+		
+		default:
 			return Color.BLACK;
+
 		}
 
 	}
@@ -117,13 +116,12 @@ public class Square {
 
 		return false;
 	}
-	
-	
-	public boolean isFloor(){
-		if(SqTy == SquareType.Floor || SqTy == SquareType.Tracing){
+
+	public boolean isFloor() {
+		if (SqTy == SquareType.Floor || SqTy == SquareType.Tracing) {
 			return true;
 		}
-		
+
 		return false;
 	}
 
