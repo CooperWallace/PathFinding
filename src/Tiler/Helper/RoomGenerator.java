@@ -161,7 +161,7 @@ public class RoomGenerator {
 
 			Square NextRoom = Nodes[(int) Temp2.CenterPoint().x][(int) Temp2.CenterPoint().y];
 
-			TunnelDigger.StartPathing(Original, NextRoom);
+			TunnelDigger.PathBetweenRooms(Temp, Temp2);
 			System.out.println(Temp.CenterPoint() + " Linked to " + Temp2.CenterPoint());
 
 		}

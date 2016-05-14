@@ -18,8 +18,7 @@ public class TileManager {
 	public static final int Blocks_HeightandWidth = 16;
 
 	/**
-	 * This class is used to manage the Tiles. Anything regarding tile movement
-	 * should be in this class.
+	 * This class is used to manage the Tiles. Anything regarding tile movement should be in this class.
 	 * 
 	 */
 
@@ -36,9 +35,6 @@ public class TileManager {
 
 		RoomGen = new RoomGenerator(Nodes);
 		RoomGen.Generate();
-
-		PathFinding = new PathFinder(Nodes);
-
 	}
 
 	public void buildTiles() {
@@ -65,14 +61,6 @@ public class TileManager {
 
 	public void render(ShapeRenderer shape) {
 
-		
-		if(Gdx.input.isKeyPressed(Keys.SPACE)){
-			
-			buildTiles();
-			RoomGen.Generate();
-		}
-		
-		
 		// Renders both the Rectangle and the lines
 		for (int i = 0; i < Nodes.length; i++) {
 
@@ -88,18 +76,15 @@ public class TileManager {
 				shape.end();
 			}
 		}
-		
-		
-		
-		
+
 	}
 
 	public void RenderPosText(SpriteBatch batch) {
 
-		/*	This method is only really ment to be used for debugging purposes
-		 * 
-		 * */
-		
+		/*
+		 * This method is only really ment to be used for debugging purposes
+		 */
+
 		batch.begin();
 		// Renders stuff like position text
 
@@ -108,9 +93,8 @@ public class TileManager {
 			// String is +1 to account for offset of For statement
 
 			for (int B = 0; B < Nodes[i].length; B++) {
-				//AssetLoader.Font.draw(batch, "Y: " + B , Nodes[i][B].getX() + 12, Nodes[i][B].getY() + 15);
-				//AssetLoader.Font.draw(batch, "X: " + i, Nodes[i][B].getX() + 12, Nodes[i][B].getY() + 30);
-
+				// AssetLoader.Font.draw(batch, "Y: " + B , Nodes[i][B].getX() + 12, Nodes[i][B].getY() + 15);
+				// AssetLoader.Font.draw(batch, "X: " + i, Nodes[i][B].getX() + 12, Nodes[i][B].getY() + 30);
 
 			}
 		}

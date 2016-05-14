@@ -11,11 +11,11 @@ public class TunnelPathFinder extends PathFinder {
 	}
 
 	public void PathBetweenRooms(Room Start, Room End){
-		Square StartSq = new Square((int)Start.CenterPoint().x, (int)Start.CenterPoint().y, TileManager.Blocks_HeightandWidth, TileManager.Blocks_HeightandWidth);
 
-		Square EndSq = new Square((int)End.CenterPoint().x, (int)End.CenterPoint().y, TileManager.Blocks_HeightandWidth, TileManager.Blocks_HeightandWidth);
-		
-		
+
+		Square StartSq = Nodes[(int) Start.CenterPoint().x][(int) Start.CenterPoint().y];
+
+		Square EndSq = Nodes[(int) End.CenterPoint().x][(int) End.CenterPoint().y];
 		UpdatePathfinder();
 		
 		StartPathing(StartSq, EndSq);
@@ -48,23 +48,5 @@ public class TunnelPathFinder extends PathFinder {
 
 	}
 	
-	@Override
-	public void UpdatePathfinder() {
-
-		// This is needed to set all of the unblocked blocks to open so that
-		// they can be researched. If they aren't reset to nothing then the
-		// program will retrace it from the existing parents. Which can make it
-		// go through blocked blocks.
-
-		for (int i = 0; i < Nodes.length; i++) {
-
-			for (int n = 0; n < Nodes[Nodes.length - 1].length; n++) {
-				Nodes[i][n].KillParentLink();
-
-			}
-		}
-
-
-	}
 
 }

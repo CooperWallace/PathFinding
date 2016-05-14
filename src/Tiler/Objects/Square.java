@@ -9,24 +9,28 @@ public class Square {
 	private Square Parent;
 
 	private enum SquareType {
-		Closed, Open, Start, Blocked, Tracing, Floor;
+		Unassigned, Start, Blocked, Tracing, Floor;
 	}
 
+	private enum SquareStatus {
+		Closed, Open;
+	}
+
+	// This specific type if needed for the pathfinding to not affect the SquareType. If it's set to either closed or
+	// open it'll affect the SquareType. It needs to be an entirely seperate variable to avoid problems.a
+	private SquareStatus SquareStat;
 	private SquareType SqTy;
 
 	/**
 	 * 
 	 * @param x
 	 *            , y, height, width - All of these are used to set the Rectangle so that the Square may be rendered.
-	 * 
-	 * @param CostofMove
-	 *            The calculated Heuristic cost from the block to the end point.
 	 */
 
 	public Square(int x, int y, int height, int width) {
 		SquareRect = new Rectangle(x, y, width, height);
-		SqTy = SquareType.Open;
-
+		SqTy = SquareType.Unassigned;
+		SquareStat = SquareStatus.Open;
 	}
 
 	public String toString() {
@@ -58,11 +62,11 @@ public class Square {
 
 	// Set Square Types
 	public void setClosed() {
-		SqTy = SquareType.Closed;
+		SquareStat = SquareStatus.Closed;
 	}
 
 	public void setOpen() {
-		SqTy = SquareType.Open;
+		SquareStat = SquareStatus.Open;
 	}
 
 	public void setBlocked() {
@@ -84,10 +88,6 @@ public class Square {
 	/* Getter Classes */
 	public Color getColor() {
 		switch (SqTy) {
-		case Closed:
-			return Color.LIGHT_GRAY;
-		case Open:
-			return Color.LIGHT_GRAY;
 		case Start:
 			return Color.GREEN;
 		case Blocked:
@@ -97,14 +97,14 @@ public class Square {
 		case Floor:
 			return Color.DARK_GRAY;
 		default:
-			return Color.BLACK;
+			return Color.LIGHT_GRAY;
 
 		}
 
 	}
 
 	public boolean isOpen() {
-		if (SqTy == SquareType.Open) {
+		if (SquareStat == SquareStatus.Open) {
 			return true;
 		} else {
 			return false;
