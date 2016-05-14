@@ -137,33 +137,25 @@ public class RoomGenerator {
 
 	public void TunnelPathing() {
 
-		// Dig path between rooms.
-
-		// Set the main room.
-		// Dig path between rooms.
-
 		/*
-		 * Flawed System Currently: Bug: The pathing between the rooms seems to make a problem with some rooms not being
-		 * connected. You need to remove all of the parents before trying to get to another spot. Otherwise it'll exit
-		 * early for some reason. Can't articulate the reason
+		 * This method is dedicated to making paths between rooms. This connects all of the randomly generated rooms
+		 * together so that a dungeon may be formed.
 		 */
 
 		for (int RoomNum = 0; RoomNum < Rooms.size() - 1; RoomNum++) {
 			System.out.print((1 + RoomNum) + " ");
 
-			Room Temp = Rooms.get(RoomNum);
-			Room Temp2 = Rooms.get(RoomNum + 1);
+			
+			// This is currently set to simply path to the next generated room. Need to path to the next closest room.
+			Room Original = Rooms.get(RoomNum);
+			Original.SetConnectedtoMain();
+			Room NextRoom = Rooms.get(RoomNum + 1);
 
-			// Calculate Middle Point.
-			Vector2 MidOrig = Temp.CenterPoint();
 
-			Square Original = Nodes[(int) MidOrig.x][(int) MidOrig.y];
-
-			Square NextRoom = Nodes[(int) Temp2.CenterPoint().x][(int) Temp2.CenterPoint().y];
-
-			TunnelDigger.PathBetweenRooms(Temp, Temp2);
-			System.out.println(Temp.CenterPoint() + " Linked to " + Temp2.CenterPoint());
-
+			
+			
+			
+			TunnelDigger.PathBetweenRooms(Original, NextRoom);
 		}
 
 		System.out.println(".");
