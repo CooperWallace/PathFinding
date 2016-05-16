@@ -147,5 +147,9 @@ public class Square {
 	public float getHeight() {
 		return SquareRect.height;
 	}
+	
+	public int returnDistance(Square TestingRoom){
+		return (((int)Math.abs(SquareRect.x - TestingRoom.getX())) + ((int)Math.abs(SquareRect.y - TestingRoom.getY())));		
+	}
 
 }

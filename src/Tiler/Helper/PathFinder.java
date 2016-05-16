@@ -19,9 +19,8 @@ public class PathFinder {
 	 * @param Nodes
 	 * 
 	 * 
-	 * @TODO 
-	 * - Heuristics - Make this code reusable for mutliple parts of this program. 
-	 * - Return the path in an ArrayList rather than just changing the Squares
+	 * @TODO - Heuristics - Make this code reusable for mutliple parts of this program. - Return the path in an
+	 *       ArrayList rather than just changing the Squares
 	 */
 
 	public PathFinder(Square[][] Nodes) {
@@ -181,6 +180,8 @@ public class PathFinder {
 		for (int i = 0; i < Nodes.length; i++) {
 
 			for (int n = 0; n < Nodes[Nodes.length - 1].length; n++) {
+				
+				
 					// Sets the Node open so that it can be searched again
 					Nodes[i][n].setOpen();
 					// Kills the Parent link so that the Frontier can reset it

@@ -145,16 +145,41 @@ public class RoomGenerator {
 		for (int RoomNum = 0; RoomNum < Rooms.size() - 1; RoomNum++) {
 			System.out.print((1 + RoomNum) + " ");
 
-			
 			// This is currently set to simply path to the next generated room. Need to path to the next closest room.
 			Room Original = Rooms.get(RoomNum);
-			Original.SetConnectedtoMain();
 			Room NextRoom = Rooms.get(RoomNum + 1);
 
+			/*
+			 * This loop is set to test every room in the ArrayList(Room) to see which one is the closest distance to
+			 * the Original room(The current one thats trying to path to the closest room.)
+			 * 
+			 * This still needs a bunch of tweaking to get it to work properly. Running into a bunch of problems with
+			 * Rooms being matched with illogical rooms. This appears to be a problem with the logic in this loop. It
+			 * will be tweaked and fixed over time until it's properly done.
+			 * 
+			 * Rooms seem to be pathed to multiple times.
+			 */
 
-			
-			
-			
+			int ClosestValue = Original.returnDistanceBetweenRooms(NextRoom);
+
+			for (Room FindRoom : Rooms) {
+
+				int TestingValue = Original.returnDistanceBetweenRooms(FindRoom);
+
+				if (TestingValue < ClosestValue && !FindRoom.isConnected() && !FindRoom.hasParent()
+						&& !FindRoom.equals(Original)) {
+
+					ClosestValue = TestingValue;
+					NextRoom = FindRoom;
+
+				}
+
+			}
+
+			Original.SetConnectedtoMain();
+			NextRoom.SetConnectedtoMain();
+			NextRoom.setParent(Original);
+
 			TunnelDigger.PathBetweenRooms(Original, NextRoom);
 		}
 
