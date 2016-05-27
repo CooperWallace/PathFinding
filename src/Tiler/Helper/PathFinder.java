@@ -181,9 +181,9 @@ public class PathFinder {
 
 			for (int n = 0; n < Nodes[Nodes.length - 1].length; n++) {
 				
-				
+				if(!Nodes[i][n].isBlocked()){
 					// Sets the Node open so that it can be searched again
-					Nodes[i][n].setOpen();
+					Nodes[i][n].setOpen();}
 					// Kills the Parent link so that the Frontier can reset it
 					// to a new value.
 					Nodes[i][n].KillParentLink();

@@ -1,6 +1,7 @@
 package Tiler.Helper;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 import Tiler.Objects.Room;
@@ -75,7 +76,7 @@ public class RoomGenerator {
 
 		int Trying = 0;
 
-		while (Trying < 100) {
+		while (Trying < 1000) {
 			// Randomly Generates X,Y Position, and the Size of then room.
 			int RandomHeight = rand.nextInt(MaxRoomSize);
 			int RandomWidth = rand.nextInt(MaxRoomSize);
@@ -134,6 +135,44 @@ public class RoomGenerator {
 		}
 
 	}
+	
+
+	public void ArrayChange() {
+
+		// This is nothing more than an experiment. I wanted it to order the ArrayList to go from unsorted to sorted
+		// from closest to farthest.
+
+		Room MainRoom = Rooms.get(0);
+
+		@SuppressWarnings("unchecked")
+		ArrayList<Room> StructuredArray = (ArrayList<Room>) Rooms.clone();
+
+		for (int i = 1; i < Rooms.size() - 1; i++) {
+
+			Room Closest = Rooms.get(i);
+			int ClosestValue = Closest.returnDistanceBetweenRooms(MainRoom);
+			int Position = i;
+
+			for (int b = i + 1; b < Rooms.size() - 1; b++) {
+
+				Room FindRoom = Rooms.get(b);
+				int TestingValue = MainRoom.returnDistanceBetweenRooms(FindRoom);
+
+				if (TestingValue < ClosestValue && !FindRoom.equals(MainRoom)) {
+					ClosestValue = TestingValue;
+					Closest = FindRoom;
+					Position = b;
+				}
+
+			}
+
+			Collections.swap(StructuredArray, i, Position);
+
+		}
+
+		Rooms = StructuredArray;
+
+	}
 
 	public void TunnelPathing() {
 
@@ -141,6 +180,8 @@ public class RoomGenerator {
 		 * This method is dedicated to making paths between rooms. This connects all of the randomly generated rooms
 		 * together so that a dungeon may be formed.
 		 */
+
+		ArrayChange();
 
 		for (int RoomNum = 0; RoomNum < Rooms.size() - 1; RoomNum++) {
 			System.out.print((1 + RoomNum) + " ");
@@ -181,6 +222,7 @@ public class RoomGenerator {
 			NextRoom.setParent(Original);
 
 			TunnelDigger.PathBetweenRooms(Original, NextRoom);
+			DrawRoom(Original); DrawRoom(NextRoom);
 		}
 
 		System.out.println(".");
@@ -193,31 +235,40 @@ public class RoomGenerator {
 		// Set the walls and floors of each of the squares within a room.
 
 		for (Room RoomTest : Rooms) {
+			
+			DrawRoom(RoomTest);
 
-			// Set the outside of the room as blocked
-			for (int X = (int) RoomTest.getRectangle().getX(); X < (RoomTest.getRectangle().getX() + RoomTest
-					.getRectangle().getWidth()); X++) {
-				for (int Y = (int) RoomTest.getRectangle().getY(); Y < (RoomTest.getRectangle().getY() + RoomTest
-						.getRectangle().getHeight()); Y++) {
+		}
 
-					if (!Nodes[X][Y].isFloor()) {
-						Nodes[X][Y].setBlocked();
-					}
+		Nodes[(int) Rooms.get(0).CenterPoint().x][(int) Rooms.get(0).CenterPoint().y].setStart();
 
+		Nodes[(int) Rooms.get(Rooms.size()-1).CenterPoint().x][(int) Rooms.get(Rooms.size()-1).CenterPoint().y].setStart();
+	}
+
+	public void DrawRoom(Room DrawRoom) {
+
+		// Set the outside of the room as blocked
+		for (int X = (int) DrawRoom.getRectangle().getX(); X < (DrawRoom.getRectangle().getX() + DrawRoom
+				.getRectangle().getWidth()); X++) {
+			for (int Y = (int) DrawRoom.getRectangle().getY(); Y < (DrawRoom.getRectangle().getY() + DrawRoom
+					.getRectangle().getHeight()); Y++) {
+
+				if (!Nodes[X][Y].isFloor()) {
+					Nodes[X][Y].setBlocked();
 				}
 
 			}
 
-			// Set the inside of the rooms as floors
+		}
 
-			for (int X = (int) RoomTest.getRectangle().getX() + 1; X < (RoomTest.getRectangle().getX()
-					+ RoomTest.getRectangle().getWidth() - 1); X++) {
-				for (int Y = (int) RoomTest.getRectangle().getY() + 1; Y < (RoomTest.getRectangle().getY() + RoomTest
-						.getRectangle().getHeight()) - 1; Y++) {
+		// Set the inside of the rooms as floors
 
-					Nodes[X][Y].setFloor();
+		for (int X = (int) DrawRoom.getRectangle().getX() + 1; X < (DrawRoom.getRectangle().getX()
+				+ DrawRoom.getRectangle().getWidth() - 1); X++) {
+			for (int Y = (int) DrawRoom.getRectangle().getY() + 1; Y < (DrawRoom.getRectangle().getY() + DrawRoom
+					.getRectangle().getHeight()) - 1; Y++) {
 
-				}
+				Nodes[X][Y].setFloor();
 
 			}
 

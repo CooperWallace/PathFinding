@@ -27,6 +27,7 @@ public class TunnelPathFinder extends PathFinder {
 					.getHeight()) - 1; Y++) {
 
 				if (Nodes[X][Y].returnDistance(EndSq) < ClosestValue) {
+
 					ClosestValue = Nodes[X][Y].returnDistance(EndSq);
 					StartSq = Nodes[X][Y];
 
@@ -36,7 +37,7 @@ public class TunnelPathFinder extends PathFinder {
 		}
 
 		// Same loop as above but for the EndSquare instead of the StartSquare
-		
+
 		ClosestValue = EndSq.returnDistance(StartSq);
 		for (int X = (int) End.getRectangle().getX() + 1; X < (End.getRectangle().getX()
 				+ End.getRectangle().getWidth() - 1); X++) {
